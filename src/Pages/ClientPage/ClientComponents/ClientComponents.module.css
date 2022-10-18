@@ -1,0 +1,50 @@
+
+.input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.input__title {
+    display: flex;
+    flex-direction: column;
+}
+.h1 {
+    font-size: 25px;
+    margin: 0 0 25px 0;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+.family {
+    width: 280px;
+}
+.s {
+    margin: 0;
+    padding: 0;
+}
+.img {
+    width: 50px ;
+    margin: 25px 0 0 0;
+
+}
+.mather {
+    display: flex;
+    gap: 25px;
+}
+.h2 {
+    margin: 25px 0 0 0;
+    display: flex;
+    justify-content: center;
+}
+.bth {
+    font-size: 25px;
+    color: white;
+    padding: 10px 40px;
+    border: none;
+    background: dodgerblue;
+    cursor: pointer;
+}

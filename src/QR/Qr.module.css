@@ -1,0 +1,14 @@
+
+@media print{
+    .qr {
+        position: relative;
+        z-index: 1111;
+    }
+   .bth {
+       display: none;
+   }
+body {
+    background: white;
+    position: absolute;
+}
+}

@@ -1,0 +1,6 @@
+export const ADMIN_ROUTE = '/admin'
+export const CLIENT_ROUTE = '/client/:hash'
+export const VIEW_ROUTE = '/view/:hash'
+export const PASSWORD_ROUTE = '/password'
+export const LOGIN_ROUTE = '/'
+export const LOGINCLIENT_ROUTE = '/login-client/:hash'
