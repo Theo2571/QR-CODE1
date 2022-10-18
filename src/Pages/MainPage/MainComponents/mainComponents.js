@@ -222,7 +222,6 @@ const MainComponents = () => {
             <TablePagination className={s.pagination}
                 component="div"
                 count={total}
-
                 page={page}
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
