@@ -1,9 +1,7 @@
 import s from './Qr.module.css'
 import QRCode from "react-qr-code";
-// import {useSelector} from "react-redux";
 function Qr({hash}) {
 const print = () => {
-    // window.onafterprint = window.history.back();
     window.print();
 }
     return (
@@ -19,6 +17,5 @@ const print = () => {
         </div>
     )
 }
-// http://109.201.185.48/view/${currentUser?.id}
 export default Qr
 

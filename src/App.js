@@ -6,7 +6,7 @@ import {getProfile} from "./store/slices/userSlice";
 function App() {
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getProfile())
+            dispatch(getProfile())
     }, []);
     return (
         <div>

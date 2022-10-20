@@ -1,17 +1,38 @@
-import {ADMIN_ROUTE, LOGIN_ROUTE} from "./utils/consts";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {useSelector} from "react-redux";
+import {Navigate, Route, Routes} from "react-router-dom";
 import {authRoutes, publicRoutes} from "./routes";
+import {LOGIN_ROUTE} from "./utils/consts";
+const beforeEnterAdmin = (component, role, path ) => {
+    if (path === '/admin'  ) {
+        return component
+    }
+    if (role === 'superadmin') {
+        return <Navigate to="/admin" /> ;
+    } else {
+        return <Navigate to="/" /> ;
+    }
+}
+const beforeEnterClient = (component, role, path) => {
+    if (role === 'superadmin'  ) {
+        return <Navigate to="/admin" /> ;
+    }
 
+    if (role === 'user' || path === '/login-client/:hash' || path === "/"  || path === '/view/:hash') {
+        return component;
+    }
+    return 'Has no access'
+
+}
 const AppRouter = () => {
-    // const role = useSelector( store => store.userReducer.role);
+    const role = useSelector( store => store.userReducer.role);
 
     return (
         <Routes>
-            {authRoutes.map(({path, Component}) =>
-                <Route path={path} element={(Component)} key={path}/>
+            {role && authRoutes.map(({path, Component}) =>
+                <Route path={path} element={beforeEnterAdmin(Component, role, path)} key={path}/>
             )}
             {publicRoutes.map(({path, Component}) =>
-                <Route path={path} element={(Component)} key={path}/>
+                <Route path={path} element={beforeEnterClient(Component, role, path)} key={path}/>
             )}
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} replace />} />
         </Routes>

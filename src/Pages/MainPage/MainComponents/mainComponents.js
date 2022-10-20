@@ -9,10 +9,8 @@ import TablePagination from '@mui/material/TablePagination';
 const MainComponents = () => {
     const items = useSelector( store => store.userReducer.users);
     const total = useSelector( store => store.userReducer.total);
-
     const dispatch = useDispatch()
     const [count , setCount] = useState()
-    console.log(items)
 
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -21,147 +19,21 @@ const MainComponents = () => {
         setPage(newPage);
         dispatch(getUsers(newPage))
     };
-
-    // const handleChangeRowsPerPage = (event) => {
-    //     setRowsPerPage(parseInt(event.target.value, 10));
-    //     setPage(1);
-    // };
     const addUsers = async () =>{
-      await  dispatch(postRegister({count}))
+        await  dispatch(postRegister({count}))
         dispatch(getUsers())
     }
-    useEffect(() => {
-        dispatch(getUsers())
-    }, []);
-    useEffect(() => {
-        // console.log(items)
-    }, [items])
-    const [contacts, setContacts] = useState([]);
-    // const [addFormData, setAddFormData] = useState({
-    //     hash: "",
-    //     qr: "",
-    //     name: "",
-    //     lastname: "",
-    //     birthday: "",
-    //     phone: "",
-    //     address: "",
-    //     MomName: "",
-    //     MomPhone: "",
-    //     DadName: "",
-    //     DadPhone: "",
-    // });
 
-    // const [editFormData, setEditFormData] = useState({
-    //     hash: "",
-    //     qr: "",
-    //     name: "",
-    //     lastname: "",
-    //     birthday: "",
-    //     phone: "",
-    //     address: "",
-    //     MomName: "",
-    //     MomPhone: "",
-    //     DadName: "",
-    //     DadPhone: "",
-    // });
+
+    const [contacts, setContacts] = useState([]);
 
     const [editContactId, setEditContactId] = useState(null);
 
-    const handleAddFormChange = (event) => {
-        event.preventDefault();
-
-        // const fieldName = event.target.getAttribute("name");
-        // const fieldValue = event.target.value;
-
-        // const newFormData = { ...addFormData };
-        // newFormData[fieldName] = fieldValue;
-
-        // setAddFormData(newFormData);
-    };
-
-    const handleEditFormChange = (event) => {
-        // event.preventDefault();
-        // //
-        // const fieldName = event.target.getAttribute("name");
-        // const fieldValue = event.target.value;
-
-        // const newFormData = { ...editFormData };
-        // newFormData[fieldName] = fieldValue;
-
-        // setEditFormData(newFormData);
-    };
-
-    const  handleAddFormSubmit = (event) => {
-        event.preventDefault();
-
-        const newContact = {
-            // id: nanoid(items.id),
-            // hash: items.hash,
-            // qr: items.qr,
-            // name: items.name,
-            // lastname: items.lastname,
-            // birthday: items.birthday,
-            // phone: items.phone,
-            // address: items.address,
-            // MomName: items.MomName,
-            // MomPhone: items.MomPhone,
-            // DadName: items.DadName,
-            // DadPhone:items.DadPhone,
-        };
-
-        const newContacts = [...contacts, newContact];
-        setContacts(newContacts);
-    };
-
-
     const handleEditFormSubmit = (event) => {
         event.preventDefault();
-
-        // const editedContact = {
-        //     id: editContactId,
-        //     hash: items.hash,
-        //     qr: items.qr,
-        //     name: items.name,
-        //     lastname: items.lastname,
-        //     birthday: items.birthday,
-        //     phone: items.phone,
-        //     address: items.address,
-        //     MomName: items.MomName,
-        //     MomPhone: items.MomPhone,
-        //     DadName: items.DadName,
-        //     DadPhone: items.DadPhone,
-        // };
-
-        const newContacts = [...contacts];
-
-        const index = contacts.findIndex((items) => items.id === editContactId);
-
-        // newContacts[index] = editedContact;
-
-        setContacts(newContacts);
         setEditContactId(null);
     };
 
-    const handleEditClick = (event, items) => {
-        event.preventDefault();
-        setEditContactId(items.id);
-
-        // const formValues = {
-        //     hash: contact.items.hash,
-        //     qr: contact.items.qr,
-        //     name: contact.items.name,
-        //     lastname: contact.items.lastname,
-        //     birthday: contact.items.birthday,
-        //     phone: contact.items.phone,
-        //     address: contact.items.address,
-        //     MomName: contact.items.MomName,
-        //     MomPhone: contact.items.MomPhone,
-        //     DadName: contact.items.DadName,
-        //     DadPhone: contact.items.DadPhone,
-        // };
-
-        // setEditFormData(formValues);
-    };
 
     const handleCancelClick = () => {
         setEditContactId(null);
@@ -169,13 +41,15 @@ const MainComponents = () => {
 
     const handleDeleteClick = (contactId) => {
         const newContacts = [...contacts];
-
         const index = contacts.findIndex((contact) => contact.id === contactId);
-
         newContacts.splice(index, 1);
-
         setContacts(newContacts);
     };
+
+    // useEffect(() => {
+    //     dispatch(getUsers())
+    // }, []);
+
     return (
         <div className="app-container">
             <form onSubmit={handleEditFormSubmit}>
@@ -202,14 +76,11 @@ const MainComponents = () => {
                         <Fragment>
                             {editContactId === items.id ? (
                                 <EditableRow
-                                    // editFormData={editFormData}
-                                    handleEditFormChange={handleEditFormChange}
                                     handleCancelClick={handleCancelClick}
                                 />
                             ) : (
                                 <ReadOnlyRow
                                     contact={contact}
-                                    handleEditClick={handleEditClick}
                                     handleDeleteClick={handleDeleteClick}
                                 />
                             )}
@@ -220,12 +91,11 @@ const MainComponents = () => {
                 </table>
             </form>
             <TablePagination className={s.pagination}
-                component="div"
-                count={total}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                // onRowsPerPageChange={handleChangeRowsPerPage}
+                             component="div"
+                             count={total}
+                             page={page}
+                             onPageChange={handleChangePage}
+                             rowsPerPage={rowsPerPage}
             />
             <h2>Добавить пользователя</h2>
             <div>

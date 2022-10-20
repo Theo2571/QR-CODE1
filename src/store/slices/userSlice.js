@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk, isRejectedWithValue} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
@@ -17,7 +17,6 @@ export const postRegister  = createAsyncThunk(
     'register/postRegister',
     async (data) => {
         const res = await axios.post(`http://92.245.114.113:5959/accounts/user/register/${data.count}`, data , { headers: { Authorization: `Bearer ${initialState.token}`} })
-        console.log(res.data);
         return res.data
     })
 
@@ -26,7 +25,6 @@ export const postLogin  = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         try{
             const res = await axios.post(`http://92.245.114.113:5959/accounts/login`, data)
-            console.log('login',res.data);
             return res.data
         }catch (e){
             return rejectWithValue(e.response.data.message)
@@ -37,7 +35,6 @@ export const postAdmin  = createAsyncThunk(
     'login/postAdmin',
     async (data) => {
         const res = await axios.post(`http://92.245.114.113:5959/accounts/admin/login`, data)
-        console.log('login',res.data);
         return res.data
 
     })
@@ -55,7 +52,6 @@ export const postForgot  = createAsyncThunk(
 export const patchUsers  = createAsyncThunk(
     'users/patchUsers',
     async ({ data, hash}) => {
-        console.log(hash, "dawdawd")
         const res = await axios.patch(`http://92.245.114.113:5959/users/${hash}`, data , { headers: { Authorization: `Bearer ${initialState.token}` } })
         return res.data
     })
@@ -72,13 +68,12 @@ export const patchPassword  = createAsyncThunk(
 
 export const getUsers  = createAsyncThunk(
     'users/getUsers',
-    async (page) => {
-        console.log(page, "dwadd")
-
+    async (page, { getState }) => {
+        const state = getState()
+        console.log(initialState.token, '3')
         const res = await axios.get(`http://92.245.114.113:5959/users`, { headers: { Authorization: `Bearer ${initialState.token}` },
             params:{page}
-        }
-        )
+        })
         return res.data
     })
 
@@ -103,7 +98,6 @@ export const deleteUser = createAsyncThunk(
     async (hash, thunkAPI) => {
         const res = await axios.delete(`http://92.245.114.113:5959/users/${hash}`,
             { headers: { Authorization: `Bearer ${initialState.token}` } } )
-        console.log(res.data);
         return hash
     })
 
@@ -113,27 +107,28 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         email(state, action) {
-            console.log(action);
             state.hash = action.payload;
         },
         setUserId(state, action){
             state.userId = action.payload
         },
         hash(state, action) {
-            console.log(action)
+
             state.hash = action.payload
-        }
+        },
+        token(state, action) {
+
+            state.hash = action.payload
+        },
+
+
     },
     extraReducers: {
         [postRegister.pending]: (state) => {
             state.loading = true
         },
-        [postRegister.fulfilled]: (state, { payload }) => {
+        [postRegister.fulfilled]: (state) => {
             state.loading = false
-            state.token = payload.accessToken
-            state.role = payload.role
-            // localStorage.setItem('role', payload.role)
-            // localStorage.setItem('token', payload.accessToken)
         },
         [postRegister.rejected]: (state) => {
             state.loading = false
@@ -145,7 +140,10 @@ export const userSlice = createSlice({
             state.loading = true
 
         },
-
+        [postLogin.rejected]: (state,{payload}) => {
+            state.loading = false
+            state.error = payload
+        },
         [postLogin.fulfilled]: (state, { payload }) => {
             state.loading = false
             state.token = payload.accessToken
@@ -155,10 +153,7 @@ export const userSlice = createSlice({
 
         },
 
-        [postLogin.rejected]: (state,{payload}) => {
-            state.loading = false
-            state.error = payload
-        },
+
 
 
 
@@ -270,6 +265,6 @@ export const userSlice = createSlice({
 })
 export const {
     hash,
-    setUserId
+    setUserId,
 } = userSlice.actions
 export const userSliceReducer = userSlice.reducer

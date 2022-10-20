@@ -5,20 +5,20 @@ import View from "./Pages/ViewPage/View";
 import Password from "./Pages/PasswordPage/Password";
 import Login from "./Pages/LoginPage/login";
 import LoginClient from "./Pages/LoginPage/LoginClient";
+import Auth from "./components/auth/auth";
 
-export const authRoutes = [
-
-    {
-
-    }
+export const authRoutes = [  {
+    path: ADMIN_ROUTE,
+    Component: (
+        <Auth>
+            <Main/>
+        </Auth>
+    )
+},
 ]
 
 
 export const publicRoutes = [
-    {
-        path: ADMIN_ROUTE,
-        Component: <Main/>
-    },
 
     {
         path: CLIENT_ROUTE,

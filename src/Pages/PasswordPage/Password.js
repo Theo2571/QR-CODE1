@@ -2,30 +2,16 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useForm, SubmitHandler, Controller, useFormState } from "react-hook-form";
+import { useForm, Controller, useFormState } from "react-hook-form";
 import './Password.css'
 import { loginValidation, passwordValidation } from './validation';
-import View from "../ViewPage/View";
-// import {CLIENT_ROUTE} from "../../utils/consts";
-// import {NavLink,  useNavigate} from "react-router-dom";
-// import {LOGIN_ROUTE, FORGOT__ROUTE, CLIENT_ROUTE} from "../../../utils/consts";
-// import { postRegister} from "../../../store/slices/userSlice";
-// import {useDispatch} from "react-redux";
-// import {ISignInForm} from "../../../store/models";
+
 
  const Password = () => {
-    // const navigate = useNavigate();
-    // const dispatch = useDispatch()
     const { handleSubmit, control } = useForm();
     const { errors } = useFormState({
         control
     })
-    // const onSubmit: SubmitHandler = async data => {
-    //     console.log("data", data);
-    //     await dispatch(postRegister(data))
-    //     navigate(CLIENT_ROUTE)
-    // };
-
     return (
         <div className="auth-form">
             <Typography variant="h4" component="div">

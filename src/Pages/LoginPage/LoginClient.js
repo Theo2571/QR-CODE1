@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -6,24 +6,28 @@ import { useForm, Controller, useFormState } from "react-hook-form";
 import './Login.module.css';
 import { loginValidation, passwordValidation } from '../../validation/validation';
 import {Navigate, NavLink, useNavigate, useParams} from "react-router-dom";
-import { postLogin} from "../../store/slices/userSlice";
+import {getProfile, postLogin} from "../../store/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {CLIENT_ROUTE, VIEW_ROUTE} from "../../utils/consts";
-// import Password from "../PasswordPage/Password";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const { handleSubmit, control,setError } = useForm();
+    const {hash} = useParams()
+    const {token,error} = useSelector( store => store.userReducer);
+    const { handleSubmit, control,setError, reset } = useForm();
     const { errors } = useFormState({
         control
     })
-    const {hash} = useParams()
-    const {token,error} = useSelector( store => store.userReducer);
+
+    useEffect(() => {
+        reset({hash})
+    }, []);
 
 
     const onSubmit = async (data) => {
         console.log("data", data);
         await dispatch(postLogin(data))
+        dispatch(getProfile())
+
         if(token){
             navigate(`/client/${hash}`)
         } else {
@@ -41,24 +45,7 @@ const Login = () => {
                 Чтобы получить доступ
             </Typography>
             <form className="auth-form__form" onSubmit={handleSubmit(onSubmit)}>
-                {/*<Controller*/}
-                {/*    control={control}*/}
-                {/*    name="hash"*/}
-                {/*    rules={loginValidation}*/}
-                {/*    render={({ field }) => (*/}
-                {/*        <TextField*/}
-                {/*            label="Почта"*/}
-                {/*            onChange={(e) => field.onChange(e)}*/}
-                {/*            value={field.value}*/}
-                {/*            fullWidth={ true }*/}
-                {/*            size="small"*/}
-                {/*            margin="normal"*/}
-                {/*            className="auth-form__input"*/}
-                {/*            error={!!errors.email?.message}*/}
-                {/*            helperText={ errors?.email?.message}*/}
-                {/*        />*/}
-                {/*    )}*/}
-                {/*/>*/}
+
                 <Controller
                     control={control}
                     name="password"

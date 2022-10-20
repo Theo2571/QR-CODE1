@@ -5,13 +5,10 @@ import Button from '@mui/material/Button';
 import { useForm, Controller, useFormState } from "react-hook-form";
 import './Login.module.css';
 import { loginValidation, passwordValidation } from '../../validation/validation';
-import { useNavigate} from "react-router-dom";
-import {postAdmin} from "../../store/slices/userSlice";
-import {useDispatch} from "react-redux";
-import {ADMIN_ROUTE} from "../../utils/consts";
-// import Password from "../PasswordPage/Password";
-    const Login = () => {
-    const navigate = useNavigate();
+import {getProfile, postAdmin} from "../../store/slices/userSlice";
+import {useDispatch, useSelector} from "react-redux";
+
+const Login = () => {
     const dispatch = useDispatch()
     const { handleSubmit, control } = useForm();
     const { errors } = useFormState({
@@ -20,8 +17,7 @@ import {ADMIN_ROUTE} from "../../utils/consts";
 
     const onSubmit = async (data) => {
         console.log("data", data);
-        await dispatch(postAdmin(data))
-        navigate(ADMIN_ROUTE)
+        await dispatch(postAdmin(data));
     };
 
     return (
