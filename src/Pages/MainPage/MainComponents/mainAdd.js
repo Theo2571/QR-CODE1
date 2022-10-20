@@ -6,6 +6,7 @@ import Qr from "../../../QR/Qr";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, getUsers} from "../../../store/slices/userSlice";
 import s from "./mainComponents.module.css"
+import ClearIcon from "@mui/icons-material/Clear";
 
 const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
     const [modalActive, setModalActive] = useState(false)
@@ -44,7 +45,13 @@ const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
 
 
         </tr>
-            <Modal  active={modalActive} setActive={setModalActive}>
+            <Modal style={{ cursor: "pointer" ,
+                position:"absolute" ,
+                bottom: 130,
+                margin: "0 0 0 360px" ,
+                pointerEvents:"all",
+                zIndex: 9999 }}
+                   active={modalActive} setActive={setModalActive}>
                 <Qr hash={contact.hash}/>
 
             </Modal>

@@ -6,6 +6,10 @@ import s from "../ClientPage/ClientComponents/ClientComponents.module.css";
 import {useDispatch} from "react-redux";
 import {getUserss} from "../../store/slices/userSlice";
 import {useParams} from "react-router-dom";
+import Button from "@mui/material/Button";
+import Modall from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 // import Geolocation from "../../MapPage/Geolocation/Geolocation";
 // import Home from "../../MapPage/map";
 
@@ -13,22 +17,34 @@ import {useParams} from "react-router-dom";
 
 const View = () => {
     const [open , setOpen] = useState(false)
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [currantUser, setCurrantUser] = useState(null)
     const dispatch = useDispatch()
     const {hash} = useParams()
     const [long, setLong] = useState(null);
     const [lat, setLat] = useState(null)
-    const sas = () => {}
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
     function copyText() {
-
-        /* Copy text into clipboard */
         navigator.clipboard.writeText
         (`https://2gis.ru/geo/${long},${lat}`);
     }
     useEffect(() => {
         dispatch(getUserss(hash)).then((res)=> {
             setCurrantUser(res.payload)
+            console.log(res.payload)
         })
+
         console.log(hash)
     }, []);
 
@@ -96,10 +112,11 @@ const View = () => {
             setOpen(true)
                 }}
 
-                >Разрешить отправить геолокацию</button>
+                >Скопировать
+                    Геолокацию</button>
                 {open &&
                     <div style={{display: "flex", gap: 50, margin: "25px 0 0 0", flexDirection: "column"}}>
-                        <a style={{textDecoration: "none", fontSize: 23, cursor: "pointer"}} href={copyText()}>Скопировать
+                        <a onClick={()=> handleOpen()} style={{textDecoration: "none", fontSize: 23, cursor: "pointer"}} href={copyText()}>Скопировать
                             Геолокацию</a>
                         <div style={{opacity: 0}}>
                             <h1>Long: {long}</h1>
@@ -108,6 +125,20 @@ const View = () => {
 
                     </div>
                 }
+            </div>
+            <div className={s.h2}>
+                <Modall
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-description" style={{margin: "10px 85px"}} sx={{ mt: 2 }}>
+                            Успешно скопировано
+                        </Typography>
+                    </Box>
+                </Modall>
             </div>
         </div>
     );

@@ -46,9 +46,9 @@ const MainComponents = () => {
         setContacts(newContacts);
     };
 
-    // useEffect(() => {
-    //     dispatch(getUsers())
-    // }, []);
+    useEffect(() => {
+        dispatch(getUsers())
+    }, []);
 
     return (
         <div className="app-container">

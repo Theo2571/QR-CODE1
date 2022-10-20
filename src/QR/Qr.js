@@ -1,6 +1,10 @@
 import s from './Qr.module.css'
 import QRCode from "react-qr-code";
 function Qr({hash}) {
+    // const verif = () => {
+    //     if () {}
+    //
+    // }
 const print = () => {
     window.print();
 }

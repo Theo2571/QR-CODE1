@@ -8,7 +8,7 @@ const initialState = {
     loading: false,
     hash: '',
     userId: null,
-    error: null,
+    error: "Invalid password",
     currentUser: null,
     total: 0
 }
@@ -16,7 +16,7 @@ const initialState = {
 export const postRegister  = createAsyncThunk(
     'register/postRegister',
     async (data) => {
-        const res = await axios.post(`http://92.245.114.113:5959/accounts/user/register/${data.count}`, data , { headers: { Authorization: `Bearer ${initialState.token}`} })
+        const res = await axios.post(`http://92.245.114.113:5959/accounts/user/register/${data.count}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
         return res.data
     })
 
@@ -40,38 +40,36 @@ export const postAdmin  = createAsyncThunk(
     })
 
 
-export const postForgot  = createAsyncThunk(
-    'register/postForgot',
-    async (data) => {
-        const res = await axios.post(`http://92.245.114.113:5959/accounts/forgotpass`, { ...data, link: 'http://92.245.114.113:5959/password' })
-        console.log(res.data);
-        return res.data
-    })
+// export const postForgot  = createAsyncThunk(
+//     'register/postForgot',
+//     async (data) => {
+//         const res = await axios.post(`http://92.245.114.113:5959/accounts/forgotpass`, { ...data, link: 'http://92.245.114.113:5959/password' })
+//         console.log(res.data);
+//         return res.data
+//     })
 
 
 export const patchUsers  = createAsyncThunk(
     'users/patchUsers',
     async ({ data, hash}) => {
-        const res = await axios.patch(`http://92.245.114.113:5959/users/${hash}`, data , { headers: { Authorization: `Bearer ${initialState.token}` } })
+        const res = await axios.patch(`http://92.245.114.113:5959/users/${hash}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         return res.data
     })
 
 
 
-export const patchPassword  = createAsyncThunk(
-    'users/patchPassword',
-    async ({ data, id}) => {
-        const res = await axios.patch(`http://92.245.114.113:5959/accounts/changePass/${id}`, data , { headers: { Authorization: `Bearer ${initialState.token}` } })
-        return res.data
-    })
+// export const patchPassword  = createAsyncThunk(
+//     'users/patchPassword',
+//     async ({ data, id}) => {
+//         const res = await axios.patch(`http://92.245.114.113:5959/accounts/changePass/${id}`, data , { headers: { Authorization: `Bearer ${initialState.token}` } })
+//         return res.data
+//     })
 
 
 export const getUsers  = createAsyncThunk(
     'users/getUsers',
-    async (page, { getState }) => {
-        const state = getState()
-        console.log(initialState.token, '3')
-        const res = await axios.get(`http://92.245.114.113:5959/users`, { headers: { Authorization: `Bearer ${initialState.token}` },
+    async (page) => {
+        const res = await axios.get(`http://92.245.114.113:5959/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             params:{page}
         })
         return res.data
@@ -81,7 +79,7 @@ export const getUsers  = createAsyncThunk(
 export const getUserss  = createAsyncThunk(
     'users/getUserss',
     async ( hash) => {
-        const res = await axios.get(`http://92.245.114.113:5959/users/${hash}`, { headers: { Authorization: `Bearer ${initialState.token}` } })
+        const res = await axios.get(`http://92.245.114.113:5959/users/${hash}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         return res.data
     })
 
@@ -89,7 +87,7 @@ export const getUserss  = createAsyncThunk(
 export const getProfile  = createAsyncThunk(
     'users/getProfile',
     async (thunkAPI) => {
-        const res = await axios.get(`http://92.245.114.113:5959/users/myProfile`, { headers: { Authorization: `Bearer ${initialState.token}` } })
+        const res = await axios.get(`http://92.245.114.113:5959/users/myProfile`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         return res.data
     })
 
@@ -97,7 +95,7 @@ export const deleteUser = createAsyncThunk(
     'users/deleteUser',
     async (hash, thunkAPI) => {
         const res = await axios.delete(`http://92.245.114.113:5959/users/${hash}`,
-            { headers: { Authorization: `Bearer ${initialState.token}` } } )
+            { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
 
@@ -115,13 +113,7 @@ export const userSlice = createSlice({
         hash(state, action) {
 
             state.hash = action.payload
-        },
-        token(state, action) {
-
-            state.hash = action.payload
-        },
-
-
+        }
     },
     extraReducers: {
         [postRegister.pending]: (state) => {
@@ -154,9 +146,6 @@ export const userSlice = createSlice({
         },
 
 
-
-
-
         [postAdmin.pending]: (state) => {
             state.loading = true
         },
@@ -172,18 +161,16 @@ export const userSlice = createSlice({
         },
 
 
-        [postForgot.pending]: (state) => {
-            state.loading = true
-        },
-        [postForgot.fulfilled]: (state, { payload }) => {
-            state.loading = false
-            state.users = payload
-        },
-        [postForgot.rejected]: (state) => {
-            state.loading = false
-        },
-
-
+        // [postForgot.pending]: (state) => {
+        //     state.loading = true
+        // },
+        // [postForgot.fulfilled]: (state, { payload }) => {
+        //     state.loading = false
+        //     state.users = payload
+        // },
+        // [postForgot.rejected]: (state) => {
+        //     state.loading = false
+        // },
 
         [patchUsers.pending]: (state) => {
             state.loading = true
@@ -195,22 +182,15 @@ export const userSlice = createSlice({
             state.loading = false
         },
 
-
-
-        [patchPassword.pending]: (state) => {
-            state.loading = true
-        },
-        [patchPassword.fulfilled]: (state, { payload }) => {
-            state.currentUser = false
-        },
-        [patchPassword.rejected]: (state) => {
-            state.loading = false
-        },
-
-
-
-
-
+        // [patchPassword.pending]: (state) => {
+        //     state.loading = true
+        // },
+        // [patchPassword.fulfilled]: (state, { payload }) => {
+        //     state.currentUser = false
+        // },
+        // [patchPassword.rejected]: (state) => {
+        //     state.loading = false
+        // },
 
         [getUsers.pending]: (state) => {
             state.loading = true
@@ -265,6 +245,6 @@ export const userSlice = createSlice({
 })
 export const {
     hash,
-    setUserId,
+    setUserId
 } = userSlice.actions
 export const userSliceReducer = userSlice.reducer

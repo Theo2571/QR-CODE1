@@ -3,12 +3,14 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useForm, Controller, useFormState } from "react-hook-form";
-import './Login.module.css';
+import s from './Login.module.css';
 import { loginValidation, passwordValidation } from '../../validation/validation';
+import { useNavigate} from "react-router-dom";
 import {getProfile, postAdmin} from "../../store/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux";
-
-const Login = () => {
+import {ADMIN_ROUTE} from "../../utils/consts";
+    const Login = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch()
     const { handleSubmit, control } = useForm();
     const { errors } = useFormState({
@@ -17,18 +19,20 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         console.log("data", data);
-        await dispatch(postAdmin(data));
+        navigate(ADMIN_ROUTE)
+        await dispatch(postAdmin(data))
+
     };
 
     return (
-        <div className="auth-form">
+        <div className={s.auth_form}>
             <Typography variant="h4" component="div">
                 Войдите
             </Typography>
-            <Typography variant="subtitle1" gutterBottom component="div" className="auth-form__subtitle">
+            <Typography variant="subtitle1" gutterBottom component="div" className={s.auth_form__subtitle}>
                 Чтобы получить доступ
             </Typography>
-            <form className="auth-form__form" onSubmit={handleSubmit(onSubmit)}>
+            <form className={s.auth_form__form} onSubmit={handleSubmit(onSubmit)}>
                 <Controller
                     control={control}
                     name="email"
@@ -41,7 +45,7 @@ const Login = () => {
                             fullWidth={ true }
                             size="small"
                             margin="normal"
-                            className="auth-form__input"
+                            className={s.auth_form__input}
                             error={!!errors.email?.message}
                             helperText={ errors?.email?.message}
                         />
@@ -60,7 +64,7 @@ const Login = () => {
                             size="small"
                             margin="normal"
                             type="password"
-                            className="auth-form__input"
+                            className={s.auth_form__input}
                             error={ !!errors?.password?.message }
                             helperText={ errors?.password?.message }
                         />

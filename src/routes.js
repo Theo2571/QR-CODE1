@@ -2,7 +2,6 @@ import {ADMIN_ROUTE, CLIENT_ROUTE, LOGIN_ROUTE, LOGINCLIENT_ROUTE, PASSWORD_ROUT
 import Main from "./Pages/MainPage/main";
 import ClientPage from "./Pages/ClientPage/ClientPage";
 import View from "./Pages/ViewPage/View";
-import Password from "./Pages/PasswordPage/Password";
 import Login from "./Pages/LoginPage/login";
 import LoginClient from "./Pages/LoginPage/LoginClient";
 import Auth from "./components/auth/auth";
@@ -28,10 +27,7 @@ export const publicRoutes = [
         path: VIEW_ROUTE,
         Component: <View/>
     },
-    {
-        path: PASSWORD_ROUTE,
-        Component: <Password/>
-    },
+
     {
         path: LOGIN_ROUTE,
         Component: <Login/>
