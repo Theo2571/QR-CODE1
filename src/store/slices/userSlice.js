@@ -40,15 +40,6 @@ export const postAdmin  = createAsyncThunk(
     })
 
 
-// export const postForgot  = createAsyncThunk(
-//     'register/postForgot',
-//     async (data) => {
-//         const res = await axios.post(`http://92.245.114.113:5959/accounts/forgotpass`, { ...data, link: 'http://92.245.114.113:5959/password' })
-//         console.log(res.data);
-//         return res.data
-//     })
-
-
 export const patchUsers  = createAsyncThunk(
     'users/patchUsers',
     async ({ data, hash}) => {
@@ -57,20 +48,11 @@ export const patchUsers  = createAsyncThunk(
     })
 
 
-
-// export const patchPassword  = createAsyncThunk(
-//     'users/patchPassword',
-//     async ({ data, id}) => {
-//         const res = await axios.patch(`http://92.245.114.113:5959/accounts/changePass/${id}`, data , { headers: { Authorization: `Bearer ${initialState.token}` } })
-//         return res.data
-//     })
-
-
 export const getUsers  = createAsyncThunk(
     'users/getUsers',
-    async (page) => {
+    async ({limit, page, archived, createDateStart, createDateEnd}) => {
         const res = await axios.get(`http://92.245.114.113:5959/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-            params:{page}
+            params:{ page, archived, limit, createDateStart, createDateEnd}
         })
         return res.data
     })
@@ -93,12 +75,18 @@ export const getProfile  = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
     'users/deleteUser',
-    async (hash, thunkAPI) => {
+    async (hash ) => {
         const res = await axios.delete(`http://92.245.114.113:5959/users/${hash}`,
             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
-
+export const archiveUser = createAsyncThunk(
+    'users/archiveUser',
+    async (hash ) => {
+        const res = await axios.patch(`http://92.245.114.113:5959/users/archive/${hash}`,
+            {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
+        return hash
+    })
 
 export const userSlice = createSlice({
     name: 'users',
@@ -111,7 +99,6 @@ export const userSlice = createSlice({
             state.userId = action.payload
         },
         hash(state, action) {
-
             state.hash = action.payload
         }
     },
@@ -161,17 +148,6 @@ export const userSlice = createSlice({
         },
 
 
-        // [postForgot.pending]: (state) => {
-        //     state.loading = true
-        // },
-        // [postForgot.fulfilled]: (state, { payload }) => {
-        //     state.loading = false
-        //     state.users = payload
-        // },
-        // [postForgot.rejected]: (state) => {
-        //     state.loading = false
-        // },
-
         [patchUsers.pending]: (state) => {
             state.loading = true
         },
@@ -182,15 +158,6 @@ export const userSlice = createSlice({
             state.loading = false
         },
 
-        // [patchPassword.pending]: (state) => {
-        //     state.loading = true
-        // },
-        // [patchPassword.fulfilled]: (state, { payload }) => {
-        //     state.currentUser = false
-        // },
-        // [patchPassword.rejected]: (state) => {
-        //     state.loading = false
-        // },
 
         [getUsers.pending]: (state) => {
             state.loading = true
@@ -228,7 +195,17 @@ export const userSlice = createSlice({
             state.loading = false
         },
 
+        [archiveUser.pending]: (state) => {
+            state.loading = true
+        },
+        [archiveUser.fulfilled]: (state, action) => {
+            state.loading = false
+            state.users.filter(item=>item.hash !== action.payload)
 
+        },
+        [archiveUser.rejected]: (state) => {
+            state.loading = false
+        },
 
         [deleteUser.pending]: (state) => {
             state.loading = true
@@ -241,6 +218,8 @@ export const userSlice = createSlice({
         [deleteUser.rejected]: (state) => {
             state.loading = false
         },
+
+
     },
 })
 export const {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,7 +9,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import telega from "../../../assets/ClientPhoto/telegram.png";
 import whatsup from "../../../assets/ClientPhoto/whatsapp.png";
-import ClearIcon from '@mui/icons-material/Clear';
 import s from "./ClientComponents.module.css";
 import { useForm, SubmitHandler, Controller, useFormState } from "react-hook-form";
 import {
@@ -25,7 +24,6 @@ import Button from "@mui/material/Button";
 import { patchUsers} from "../../../store/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux";
 import Modal from "../../../Modal/Modal";
-import * as events from "events";
 
 const style = {
     position: 'absolute',
@@ -40,8 +38,6 @@ const style = {
 };
 
 const InputPage= () => {
-    const [hasMom, setHasMom] = useState(true)
-    const [hasDad, setHasDad] = useState(true)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -57,11 +53,28 @@ const InputPage= () => {
         dispatch(patchUsers())
     }
 
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, control, reset} = useForm();
     const { errors } = useFormState({
         control
     })
     const [value, setValue] = useState(null);
+    useEffect(() => {
+        reset({
+            name: currentUser?.name,
+            lastName: currentUser?.lastName,
+            birthday:currentUser?.birthday,
+            phone:currentUser?.phone,
+            address:currentUser?.address,
+            MomName: currentUser?.mom?.name,
+            MomPhone: currentUser?.mom?.phone,
+            MomTelegram: currentUser?.mom?.tg,
+            MomWhats: currentUser?.mom?.ws,
+            DadName: currentUser?.dad?.name,
+            DadPhone: currentUser?.dad?.phone,
+            DadWhats: currentUser?.dad?.ws,
+            DadTelegram: currentUser?.dad?.tg,
+        })
+    }, [currentUser]);
 
     const onSubmit: SubmitHandler = data => {
         data.mom = {
@@ -142,6 +155,7 @@ const InputPage= () => {
                                             size="small"
                                             margin="normal"
                                             {...params}
+                                            className="auth-form__input"
                                             error={!!errors.birthday?.message}
                                             helperText={ errors?.birthday?.message}
                                         />
@@ -188,14 +202,13 @@ const InputPage= () => {
                     />
                     <h1 className={s.h1}>Родители:</h1>
 
-                    {hasMom &&
+                    {/*{hasMom &&*/}
                         <Accordion className={s.family}>
                             <AccordionSummary
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
                             >
                                 <Typography>Мама</Typography>
-                                <ClearIcon style={{ cursor: "pointer" , margin: "0 0 0 200px"}}  onClick={()=> setHasMom(false)}/>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <div className={s.flex}>
@@ -242,16 +255,16 @@ const InputPage= () => {
                                 </div>
                             </AccordionDetails>
                         </Accordion>
-                    }
+                    {/*}*/}
 
-                    {hasDad  &&
+                    {/*{hasDad  &&*/}
                         <Accordion className={s.family}>
                             <AccordionSummary
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                             >
                                 <Typography>Папа</Typography>
-                                <ClearIcon style={{ cursor: "pointer" , margin: "0 0 0 200px"}}  onClick={()=> setHasDad(false)}/>
+                                {/*<ClearIcon style={{ cursor: "pointer" , margin: "0 0 0 200px"}}  onClick={()=> setHasDad(false)}/>*/}
                             </AccordionSummary>
 
                             <AccordionDetails>
@@ -299,7 +312,7 @@ const InputPage= () => {
                                 </div>
                             </AccordionDetails>
                         </Accordion>
-                    }
+                    {/*// }*/}
 
                     <div className={s.h2}>
                         <Button

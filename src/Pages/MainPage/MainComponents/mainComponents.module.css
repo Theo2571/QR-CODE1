@@ -25,7 +25,9 @@ th {
 td {
   background-color: rgb(205, 235, 253);
 }
-
+.active__print {
+  display: none;
+}
 form {
   display: flex;
   gap: 5px;
@@ -41,10 +43,19 @@ form * {
 
 }
 @media  print {
+
   .pagination {
     display: none;
   }
   .tr {
     display: none;
+  }
+  .print {
+    display: none;
+
+  }
+  .active__print {
+    display: flex;
+    flex-wrap: wrap;
   }
 }

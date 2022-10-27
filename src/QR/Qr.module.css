@@ -1,14 +1,16 @@
 
 @media print{
+
     .qr {
         position: relative;
-        z-index: 1111;
+        z-index:55555555;
+        width: 100%;
+        height: 100%;
+        background-color: white;
     }
    .bth {
        display: none;
    }
-body {
-    background: white;
-    position: absolute;
-}
+
+
 }

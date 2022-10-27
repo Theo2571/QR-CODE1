@@ -14,10 +14,10 @@ const beforeEnterAdmin = (component, role, path ) => {
 }
 const beforeEnterClient = (component, role, path) => {
     if (role === 'superadmin'  ) {
-        return <Navigate to="/admin" /> ;
+        return component ;
     }
 
-    if (role === 'user' || path === '/login-client/:hash' || path === "/"  || path === '/view/:hash') {
+    if (role === 'user' || path === '/login-client/:hash' || path === "/"  || path === '/view/:hash' || path === '/refactor-client/:hash') {
         return component;
     }
     return 'Has no access'

@@ -8,7 +8,7 @@ import {passwordValidation } from '../../validation/validation';
 import { NavLink, useNavigate, useParams} from "react-router-dom";
 import {getProfile, getUserss, postLogin} from "../../store/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux";
-import s from "./Login.module.css";
+import View from "../ViewPage/View";
 const Login = () => {
     const [currantUser, setCurrantUser] = useState(null)
     const navigate = useNavigate();
@@ -47,55 +47,57 @@ const Login = () => {
     return (
         <>
             {currantUser ?
-        <div className={ss.auth_form}>
-            <Typography variant="h4" component="div">
-                Войдите
-            </Typography>
-            <Typography variant="subtitle1" gutterBottom component="div" className={ss.auth_form__subtitle}>
-                Чтобы получить доступ
-            </Typography>
-            <form className={ss.auth_form__form} onSubmit={handleSubmit(onSubmit)}>
 
-                <Controller
-                    control={control}
-                    name="password"
-                    rules={passwordValidation}
-                    render={({ field }) => (
-                            <TextField
-                                label="Пароль"
-                                onChange={(e) => field.onChange(e)}
-                                value={field.value}
-                                fullWidth={ true }
-                                size="small"
-                                margin="normal"
-                                type="password"
-                                className={ss.auth_form__input}
-                                error={ !!errors?.password?.message }
-                                helperText={ errors?.password?.message }
-                            />
-
-                    )}
-                />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth={ true }
-                    disableElevation={ true }
-                    sx={{
-                        marginTop: 2
-                    }}
-                >
-                    Войти
-                </Button>
-                <div className="auth-form__footer">
-
-                    <Typography variant="subtitle1" component="span" sx={{ color: 'blue'}}>
-                        <NavLink style={{ fontSize: 15 }} to={`/view/${hash}`}> Посмотреть анкету</NavLink>
-
-                    </Typography>
-                </div>
-            </form>
-        </div>
+                <View/>
+        // <div className={ss.auth_form}>
+        //     <Typography variant="h4" component="div">
+        //         Войдите
+        //     </Typography>
+        //     <Typography variant="subtitle1" gutterBottom component="div" className={ss.auth_form__subtitle}>
+        //         Чтобы получить доступ
+        //     </Typography>
+        //     <form className={ss.auth_form__form} onSubmit={handleSubmit(onSubmit)}>
+        //
+        //         <Controller
+        //             control={control}
+        //             name="password"
+        //             rules={passwordValidation}
+        //             render={({ field }) => (
+        //                     <TextField
+        //                         label="Пароль"
+        //                         onChange={(e) => field.onChange(e)}
+        //                         value={field.value}
+        //                         fullWidth={ true }
+        //                         size="small"
+        //                         margin="normal"
+        //                         type="password"
+        //                         className={ss.auth_form__input}
+        //                         error={ !!errors?.password?.message }
+        //                         helperText={ errors?.password?.message }
+        //                     />
+        //
+        //             )}
+        //         />
+        //         <Button
+        //             type="submit"
+        //             variant="contained"
+        //             fullWidth={ true }
+        //             disableElevation={ true }
+        //             sx={{
+        //                 marginTop: 2
+        //             }}
+        //         >
+        //             Войти
+        //         </Button>
+        //         <div className="auth-form__footer">
+        //
+        //             <Typography variant="subtitle1" component="span" sx={{ color: 'blue'}}>
+        //                 <NavLink style={{ fontSize: 15 }} to={`/view/${hash}`}> Посмотреть анкету</NavLink>
+        //
+        //             </Typography>
+        //         </div>
+        //     </form>
+        // </div>
                 :
                         <div className={ss.auth_form}>
                             <Typography variant="h4" component="div">
@@ -139,10 +141,10 @@ const Login = () => {
                                 </Button>
                                 <div className="auth-form__footer">
 
-                                    <Typography variant="subtitle1" component="span" sx={{ color: 'blue'}}>
-                                        <NavLink style={{ fontSize: 15 }} to={`/view/${hash}`}> Посмотреть анкету</NavLink>
+                                    {/*<Typography variant="subtitle1" component="span" sx={{ color: 'blue'}}>*/}
+                                        {/*<NavLink style={{ fontSize: 15 }} to={`/view/${hash}`}> Посмотреть анкету</NavLink>*/}
 
-                                    </Typography>
+                                    {/*</Typography>*/}
                                 </div>
                             </form>
                         </div>

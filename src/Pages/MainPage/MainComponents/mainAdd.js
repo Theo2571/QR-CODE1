@@ -1,19 +1,17 @@
 import  React, {useState} from "react";
-// import Pagination from '@mui/material/Pagination';
-// import Stack from '@mui/material/Stack';
 import Modal from "../../../Modal/Modal";
 import Qr from "../../../QR/Qr";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteUser, getUsers} from "../../../store/slices/userSlice";
+import {useDispatch} from "react-redux";
+import {archiveUser, getUsers} from "../../../store/slices/userSlice";
 import s from "./mainComponents.module.css"
-import ClearIcon from "@mui/icons-material/Clear";
+import dayjs from "dayjs";
 
-const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
+const ReadOnlyRow = ({ contact }) => {
     const [modalActive, setModalActive] = useState(false)
     const dispatch = useDispatch()
     const delUser =  async () => {
-        await dispatch(deleteUser(contact?.hash))
-        dispatch(getUsers())
+        await dispatch(archiveUser(contact?.hash))
+        dispatch(getUsers({archived: false}))
     }
     return (
         <>
@@ -30,20 +28,12 @@ const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
             <td style={{ fontSize: 15 }} >{contact?.mom?.phone}</td>
             <td style={{ fontSize: 15 }} >{contact?.dad?.name}</td>
             <td style={{ fontSize: 15 }} >{contact?.dad?.phone}</td>
+            <td style={{ fontSize: 15 }} >{dayjs(contact?.createDate).format('YYYY-MM-DD')}</td>
             <td style={{ fontSize: 15 }}>
-
-                {/*<button style={{ fontSize: 15 }}*/}
-                {/*    type="button"*/}
-                {/*    onClick={(event) => handleEditClick(event, contact)}*/}
-                {/*>*/}
-                {/*    Edit*/}
-                {/*</button>*/}
                 <button style={{ fontSize: 15 }} type="button" onClick={delUser}>
-                    Delete
+                    Archive
                 </button>
             </td>
-
-
         </tr>
             <Modal style={{ cursor: "pointer" ,
                 position:"absolute" ,
@@ -53,9 +43,7 @@ const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
                 zIndex: 9999 }}
                    active={modalActive} setActive={setModalActive}>
                 <Qr hash={contact.hash}/>
-
             </Modal>
-
         </>
     );
 };

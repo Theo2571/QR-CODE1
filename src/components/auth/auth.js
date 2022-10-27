@@ -3,9 +3,6 @@ import {useSelector} from "react-redux";
 
 const Auth = (props) => {
     const token = useSelector( store => store.userReducer.token);
-
-    console.log(token)
-
     if (token) {
         return (
             <>
