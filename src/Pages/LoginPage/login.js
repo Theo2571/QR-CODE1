@@ -17,12 +17,13 @@ import {ADMIN_ROUTE} from "../../utils/consts";
         control
     })
 
-    const onSubmit = async (data) => {
+    const onSubmit =  async (data) => {
         console.log("data", data);
-        navigate(ADMIN_ROUTE)
         await dispatch(postAdmin(data))
-
+        navigate('/admin')
     };
+
+
 
     return (
         <div className={s.auth_form}>
@@ -71,6 +72,7 @@ import {ADMIN_ROUTE} from "../../utils/consts";
                     )}
                 />
                 <Button
+
                     type="submit"
                     variant="contained"
                     fullWidth={ true }

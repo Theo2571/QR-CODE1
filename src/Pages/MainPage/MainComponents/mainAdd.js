@@ -31,18 +31,14 @@ const ReadOnlyRow = ({ contact }) => {
             <td style={{ fontSize: 15 }} >{dayjs(contact?.createDate).format('YYYY-MM-DD')}</td>
             <td style={{ fontSize: 15 }}>
                 <button style={{ fontSize: 15 }} type="button" onClick={delUser}>
-                    Archive
+                    Архивировать
                 </button>
             </td>
         </tr>
-            <Modal style={{ cursor: "pointer" ,
-                position:"absolute" ,
-                bottom: 130,
-                margin: "0 0 0 360px" ,
-                pointerEvents:"all",
-                zIndex: 9999 }}
-                   active={modalActive} setActive={setModalActive}>
+            <Modal active={modalActive} setActive={setModalActive}>
+                <div style={{display:"flex", justifyContent:"center"}}>
                 <Qr hash={contact.hash}/>
+                </div>
             </Modal>
         </>
     );

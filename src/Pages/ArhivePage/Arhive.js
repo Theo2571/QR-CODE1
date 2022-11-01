@@ -2,7 +2,7 @@ import  React, {useState} from "react";
 import Modal from "../../Modal/Modal";
 import dayjs from "dayjs";
 import {useDispatch} from "react-redux";
-import {deleteUser, getUsers} from "../../store/slices/userSlice";
+import {deleteUser, getUsers, restoreUser} from "../../store/slices/userSlice";
 import s from "../MainPage/MainComponents/mainComponents.module.css"
 import Qr from "../../QR/Qr";
 
@@ -11,6 +11,10 @@ const Archive = ({ contact }) => {
     const dispatch = useDispatch()
     const delUser =  async () => {
         await dispatch(deleteUser(contact?.hash))
+        dispatch(getUsers({ archived:true}))
+    }
+    const restore = async  () => {
+        await dispatch(restoreUser(contact?.hash))
         dispatch(getUsers({ archived:true}))
     }
     return (
@@ -30,8 +34,11 @@ const Archive = ({ contact }) => {
                 <td style={{ fontSize: 15 }} >{contact?.dad?.phone}</td>
                 <td style={{ fontSize: 15 }} >{dayjs(contact?.createDate).format('YYYY-MM-DD')}</td>
                 <td style={{ fontSize: 15 }}>
+                    <button style={{ fontSize: 15 }} type="button" onClick={restore}>
+                        Восстановить
+                    </button>
                     <button style={{ fontSize: 15 }} type="button" onClick={delUser}>
-                        Delete
+                        Удалить
                     </button>
                 </td>
             </tr>
@@ -42,7 +49,9 @@ const Archive = ({ contact }) => {
                 pointerEvents:"all",
                 zIndex: 9999 }}
                    active={modalActive} setActive={setModalActive}>
-                <Qr hash={contact?.hash}/>
+                <div style={{display:"flex", justifyContent:"center"}}>
+                    <Qr hash={contact.hash}/>
+                </div>
             </Modal>
         </>
     );

@@ -26,7 +26,8 @@ td {
   background-color: rgb(205, 235, 253);
 }
 .active__print {
-  display: none;
+  display: flex;
+  flex-wrap: wrap;
 }
 form {
   display: flex;
@@ -40,22 +41,37 @@ form td:last-child {
 
 form * {
   font-size: 0.572vw;
-
 }
-@media  print {
-
-  .pagination {
-    display: none;
-  }
-  .tr {
-    display: none;
-  }
-  .print {
-    display: none;
-
-  }
-  .active__print {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.print {
+  display: flex;
+  justify-content: center;
 }
+.bth {
+  margin: 25px 890px 0 ;
+  padding: 10px 50px;
+  cursor: pointer;
+}
+
+  @media  print {
+
+    .pagination {
+      display: none;
+    }
+    .tr {
+      display: none;
+    }
+    .print {
+      display: none;
+
+    }
+    .active__print {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .bar {
+      display: none;
+    }
+    .bth {
+      display: none;
+    }
+  }

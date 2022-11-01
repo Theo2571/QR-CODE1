@@ -12,7 +12,7 @@ const Modal = ({active, setActive, children, style}) => {
                     top: 25,
                     margin: "0 0 0 350px" ,
                     pointerEvents:"all",
-                    zIndex: 9999 }}   {...style} onClick={() => setActive(false)}  />
+                    zIndex: 99999 }}   {...style} onClick={() => setActive(false)}  />
         </div>
                 {children}
             </div>

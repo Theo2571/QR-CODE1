@@ -8,8 +8,8 @@ const print = () => {
     return (
         <div>
             <div>
-                <div style={{ display:"flex", justifyContent:"center", padding:10}}>
-                    <QRCode className={s.qr}  value={`http://http://localhost:3000/login-client/${hash}`} size={150} />
+                <div style={{ display:"flex",padding:10, }}>
+                    <QRCode className={s.qr}  value={`http://http://localhost:3000/qr/${hash}`} size={150} />
                 </div>
             </div>
             <div style={{textAlign: "center", fontSize: 25 , cursor: "pointer"}}>

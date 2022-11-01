@@ -73,7 +73,7 @@ const ArchivePage = () => {
                         <th style={{ fontSize: 15 }} >ФИО Папы</th>
                         <th style={{ fontSize: 15 }} >Номер Папы</th>
                         <th style={{ fontSize: 15 }} >Дата добавления</th>
-                        <th style={{ fontSize: 15 }} >Удалить</th>
+                        <th style={{ fontSize: 15, textAlign:"center" }} >Действие</th>
 
                     </tr>
                     </thead>

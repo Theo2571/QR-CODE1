@@ -11,13 +11,6 @@ import telega from "../../../assets/ClientPhoto/telegram.png";
 import whatsup from "../../../assets/ClientPhoto/whatsapp.png";
 import s from "./ClientComponents.module.css";
 import { useForm, SubmitHandler, Controller, useFormState } from "react-hook-form";
-import {
-    DataValidation,
-    FirstValidation,
-    gpsValidation,
-    nameValidation,
-    phoneValidation
-} from "../../../validation/validation";
 import Box from '@mui/material/Box';
 import Modall from '@mui/material/Modal';
 import Button from "@mui/material/Button";
@@ -102,7 +95,7 @@ const InputPage= () => {
                     <Controller
                         control={control}
                         name="name"
-                        rules={nameValidation}
+                        // rules={nameValidation}
                         render={({ field }) => (
                             <TextField
 
@@ -121,7 +114,7 @@ const InputPage= () => {
                     <Controller
                         control={control}
                         name="lastName"
-                        rules={FirstValidation}
+                        // rules={FirstValidation}
                         render={({ field }) => (
                             <TextField
                                 label="Фамилия"
@@ -146,7 +139,7 @@ const InputPage= () => {
                                 <Controller
                                     control={control}
                                     name="birthday"
-                                    rules={DataValidation}
+                                    // rules={DataValidation}
                                     render={({ field }) => (
                                         <TextField
                                             label="Дата рождения"
@@ -167,7 +160,7 @@ const InputPage= () => {
                     <Controller
                         control={control}
                         name="phone"
-                        rules={phoneValidation}
+                        // rules={phoneValidation}
                         render={({ field }) => (
                             <TextField
                                 label="Номер телефона"
@@ -185,7 +178,7 @@ const InputPage= () => {
                     <Controller
                         control={control}
                         name="address"
-                        rules={gpsValidation}
+                        // rules={gpsValidation}
                         render={({ field }) => (
                             <TextField
                                 label="Место проживания"
@@ -337,7 +330,7 @@ const InputPage= () => {
                 </form>
             </div>
 
-            <Modal active={modalActive} setActive={setModalActive}>
+            <Modal  active={modalActive} setActive={setModalActive}>
                 <AccordionDetails>
                     <div className={s.flex}>
                         <Controller

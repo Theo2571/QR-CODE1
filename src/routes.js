@@ -3,7 +3,7 @@ import {
     ARHIVE_ROUTE,
     CLIENT_ROUTE,
     LOGIN_ROUTE,
-    LOGINCLIENT_ROUTE, REFACTOR_ROUTE,
+    LOGINCLIENT_ROUTE, PRINT_ROUTE, REFACTOR_ROUTE,
     VIEW_ROUTE
 } from "./utils/consts";
 import Main from "./Pages/MainPage/main";
@@ -14,6 +14,7 @@ import LoginClient from "./Pages/LoginPage/LoginClient";
 import Auth from "./components/auth/auth";
 import MainArchive from "./Pages/ArhivePage/MainArchive";
 import RefactorLogin from "./Pages/LoginPage/refactorLogin";
+import MainPrint from "./Pages/PrintPage/MainPrint";
 
 export const authRoutes = [  {
     path: ADMIN_ROUTE,
@@ -52,6 +53,10 @@ export const publicRoutes = [
     {
         path: REFACTOR_ROUTE,
         Component: <RefactorLogin/>
+    },
+    {
+        path: PRINT_ROUTE,
+        Component: <MainPrint/>
     },
 ]
 

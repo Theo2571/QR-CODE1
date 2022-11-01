@@ -5,8 +5,7 @@ import EditableRow from "./mainTabl";
 import {getUsers, postRegister} from "../../../store/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux";
 import TablePagination from '@mui/material/TablePagination';
-import DateFilter from "../../../components/DataPicker/DataPicker";
-import Qr from "../../../QR/Qr";
+
 
 const MainComponents = () => {
     const d = new Date()
@@ -19,18 +18,15 @@ const MainComponents = () => {
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
     const [editContactId, setEditContactId] = useState(null);
-    // const [hui, setHui] = useState(10)
 
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-        dispatch(getUsers({limit:rowsPerPage, newPage, page, archived:false}))
+        dispatch(getUsers({limit:rowsPerPage, page, archived: false}))
     };
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
-        // dispatch(getUsers({limit:setRowsPerPage, page, archived:false}))
-
         setPage(1);
 
     };
@@ -60,8 +56,8 @@ const MainComponents = () => {
         window.print();
     }
     useEffect(() => {
-        dispatch(getUsers({page,archived: false}))
-    }, []);
+        dispatch(getUsers({limit:rowsPerPage,page,archived: false}))
+    }, [page]);
 
     useEffect(() => {
         dispatch(getUsers({limit:rowsPerPage, page, archived: false}))
@@ -116,34 +112,34 @@ const MainComponents = () => {
                              rowsPerPage={rowsPerPage}
                              onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            <div className={s.print}>
-            <h2>Добавить пользователя</h2>
-            <div>
-                <input type="text" placeholder="Добавить пользователей " style={{ width: 170, height: 20}} onChange={(e) => {setCount(e.target.value)}} />
-                <button onClick={addUsers}>Add</button>
-            </div>
-            </div>
-            <div>
-                <div className={s.print}>
-            <DateFilter  date={date} setDate={({ from, to }) => {
-                setDate({ from, to });
-                dispatch( ( getUsers({ limit:rowsPerPage, createDateStart: from, createDateEnd: to }) ) );
-            }}/>
-                </div>
-                <button className={s.print} onClick={print}>Печатать QR-Code</button>
-                <div className={s.active__print} >
-                {items.map((item) => (
-                    <>
-                    <div>
-                        <div>
-                        <Qr hash={item.hash}/>
-                        </div>
-                    </div>
-                    </>
-                    ))}
-                </div>
+            {/*<div className={s.add}>*/}
+            {/*<h2>Добавить пользователя</h2>*/}
+            {/*<div>*/}
+            {/*    <input type="text" placeholder="Добавить пользователей " style={{ width: 170, height: 20}} onChange={(e) => {setCount(e.target.value)}} />*/}
+            {/*    <button onClick={addUsers}>Add</button>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    <div className={s.print}>*/}
+            {/*<DateFilter  date={date} setDate={({ from, to }) => {*/}
+            {/*    setDate({ from, to });*/}
+            {/*    dispatch( ( getUsers({ limit:rowsPerPage, createDateStart: from, createDateEnd: to }) ) );*/}
+            {/*}}/>*/}
+            {/*    </div>*/}
+            {/*    <button className={s.print} onClick={print}>Печатать QR-Code</button>*/}
+            {/*    <div className={s.active__print} >*/}
+            {/*    {items.map((item) => (*/}
+            {/*        <>*/}
+            {/*        <div>*/}
+            {/*            <div>*/}
+            {/*            <Qr hash={item.hash}/>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*        </>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
 
-            </div>
+            {/*</div>*/}
         </div>
     );
 };

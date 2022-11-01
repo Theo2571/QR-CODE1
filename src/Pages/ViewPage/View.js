@@ -1,14 +1,15 @@
-
 import React, { useEffect, useState} from 'react';
 import telega from "../../assets/ClientPhoto/telegram.png";
 import whatsup from "../../assets/ClientPhoto/whatsapp.png";
 import s from "../ClientPage/ClientComponents/ClientComponents.module.css";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { getUserss} from "../../store/slices/userSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import Modall from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import EditIcon from '@mui/icons-material/Edit';
+import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
 
 const View = () => {
     const [open , setOpen] = useState(false)
@@ -20,19 +21,21 @@ const View = () => {
     const {hash} = useParams()
     const [long, setLong] = useState(null);
     const [lat, setLat] = useState(null)
+    const token = useSelector( store => store.userReducer.token);
+
 
     const Click = () => {
         navigate(`/refactor-client/${hash}`)
+        if (token) {
+            navigate(`/client/${hash}`)
+        }
     }
-    const ShareClick = () => {
-        navigate(`/view/${hash}`)
-    }
+
     const style = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -42,7 +45,6 @@ const View = () => {
         navigator.clipboard.writeText
         (`https://2gis.ru/geo/${long},${lat}`);
     }
-
 
     useEffect(() => {
         dispatch(getUserss(hash)).then((res)=> {
@@ -55,13 +57,11 @@ const View = () => {
 
     return (
         <div>
-
             <div style={{ display: "flex", justifyContent:"center", margin: 100}}>
-                <button style={{cursor:"pointer", position:"absolute", top:50, marginRight:"500px"}} onClick={Click}>Редактировать профиль </button>
-
+                <div style={{cursor:"pointer", position:"absolute", top:50, marginRight:"150px"}} onClick={Click}><EditIcon fontSize={"large"}/> </div>
                 <div style={{ width: 300,display: "flex", flexDirection: "column"}}>
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", position:"absolute",top:42, marginLeft:"320px"}}>
-                        <button style={{width: 200, cursor: "pointer", margin: "10px 0 0 0"}} onClick={() => {
+                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", position:"absolute",top:42, marginLeft:"200px"}}>
+                        <div style={{width: 200, cursor: "pointer", margin: "10px 0 0 0"}} onClick={() => {
                             if(navigator && navigator.geolocation && navigator.geolocation.getCurrentPosition) {
                                 navigator.geolocation.getCurrentPosition(position => {
                                     setLong(position.coords.longitude);
@@ -70,9 +70,7 @@ const View = () => {
                             }
                             setOpen(true)
                         }}
-
-                        >Поделится
-                            геолокацией</button>
+                        ><PersonPinCircleIcon fontSize={"large"}/></div>
                         {open &&
                             <div style={{display: "flex", gap: 50, margin: "25px 0 0 0", flexDirection: "column"}}>
                                 <a onClick={()=> handleOpen()} style={{opacity:0}} href={copyText()}>Скопировать
@@ -101,39 +99,55 @@ const View = () => {
                     <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text"
                            value={currantUser?.address}
                     />
-                    <h2>Мама:</h2>
-                    <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text"
-                           value={currantUser?.mom?.name}
-                    />
-                    <a href={"tel:" + currantUser?.mom?.phone}>
+                    {currantUser?.mom?.name ?
+                        <div>
+                            <h2>Мама:</h2>
+                            <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                                   value={currantUser?.mom?.name}
+                            />
 
-                        <input style={{padding: "12px 115px 12px 12px", margin: "0 0 5px 0", cursor: "pointer"}} disabled type="text"
-                               value={currantUser?.mom?.phone}
-                        />
-                    </a>
+                            <a href={"tel:" + currantUser?.mom?.phone}>
 
-                    <div style={{display: "flex", justifyContent:"center", gap: 25}}>
-                        <a href={currantUser?.mom?.tg} style={{ cursor: "pointer"}} target="_blank"><img style={{width:40}} className={s.img} src={telega} alt=""/></a>
-                        <a href={currantUser?.mom?.ws} style={{ cursor: "pointer"}} target="_blank"><img style={{width:40}} className={s.img} src={whatsup} alt=""/></a>
-                    </div>
-                    <h2>Папа:</h2>
-                    <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text" value={currantUser?.dad?.name}/>
-                    <a href={currantUser?.dad?.phone} target="_blank">
-                        <input style={{padding: "12px 115px 12px 12px", margin: "0 0 5px 0", cursor: "pointer"}} disabled type="text"
-                               value={currantUser?.dad?.phone}
-                        />
-                    </a>
-                    <div style={{display: "flex", justifyContent:"center", gap: 25}}>
-                        <a href={currantUser?.dad?.tg} style={{ cursor: "pointer"}} target="_blank"><img style={{width:40}} className={s.img} src={telega} alt=""/></a>
-                        <a href={currantUser?.dad?.ws} style={{ cursor: "pointer"}} target="_blank"><img style={{width:40}} className={s.img} src={whatsup} alt=""/></a>
-                    </div>
-                    {/*<Geolocation/>*/}
+                                <input style={{padding: "12px 115px 12px 12px", margin: "0 0 5px 0", cursor: "pointer"}}
+                                       disabled type="text"
+                                       value={currantUser?.mom?.phone}
+                                />
+                            </a>
 
-                </div>
+                            <div style={{display: "flex", justifyContent: "center", gap: 25}}>
+                                <a href={currantUser?.mom?.tg} style={{cursor: "pointer"}} target="_blank"><img
+                                    style={{width: 40}} className={s.img} src={telega} alt=""/></a>
+                                <a href={currantUser?.mom?.ws} style={{cursor: "pointer"}} target="_blank"><img
+                                    style={{width: 40}} className={s.img} src={whatsup} alt=""/></a>
+                            </div>
+                        </div>
+                        :
+                        <div></div>
+                    }
+                    {currantUser?.dad?.name ?
+
+                        <div>
+                            <h2>Папа:</h2>
+                            <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                                   value={currantUser?.dad?.name}/>
+                            <a href={currantUser?.dad?.phone} target="_blank">
+                                <input style={{padding: "12px 115px 12px 12px", margin: "0 0 5px 0", cursor: "pointer"}}
+                                       disabled type="text"
+                                       value={currantUser?.dad?.phone}
+                                />
+                            </a>
+                            <div style={{display: "flex", justifyContent: "center", gap: 25}}>
+                                <a href={currantUser?.dad?.tg} style={{cursor: "pointer"}} target="_blank"><img
+                                    style={{width: 40}} className={s.img} src={telega} alt=""/></a>
+                                <a href={currantUser?.dad?.ws} style={{cursor: "pointer"}} target="_blank"><img
+                                    style={{width: 40}} className={s.img} src={whatsup} alt=""/></a>
+                            </div>
+                        </div>
+                        :
+                        <div></div>
+                    }
             </div>
-            {/*<div style={{margin: "0 500px 0 "}}><Home/></div>*/}
-
-
+            </div>
 
             <div className={s.h2}>
                 <Modall
@@ -143,7 +157,7 @@ const View = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <Typography id="modal-modal-description" style={{margin: "10px 85px"}} sx={{ mt: 2 }}>
+                        <Typography id="modal-modal-description" style={{margin: "10px 85px",}} sx={{ mt: 2}}>
                             Успешно скопировано
                         </Typography>
                     </Box>

@@ -34,7 +34,7 @@ export const postLogin  = createAsyncThunk(
 export const postAdmin  = createAsyncThunk(
     'login/postAdmin',
     async (data) => {
-        const res = await axios.post(`http://92.245.114.113:5959/accounts/admin/login`, data)
+        const res = await axios.post(`http://92.245.114.113:5959/accounts/admin/login`, data, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
         return res.data
 
     })
@@ -80,6 +80,15 @@ export const deleteUser = createAsyncThunk(
             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
+
+export const restoreUser = createAsyncThunk(
+    'users/restoreUser',
+    async (hash ) => {
+        const res = await axios.patch(`http://92.245.114.113:5959/users/restore/${hash}`,
+            {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
+        return hash
+    })
+
 export const archiveUser = createAsyncThunk(
     'users/archiveUser',
     async (hash ) => {
@@ -87,7 +96,13 @@ export const archiveUser = createAsyncThunk(
             {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
-
+export const PrintQr = createAsyncThunk(
+    'users/PrintQr',
+    async (hashes) => {
+        const res = await axios.patch(`http://92.245.114.113:5959/users/print`,
+            { hashes }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
+        return hash
+    })
 export const userSlice = createSlice({
     name: 'users',
     initialState,
@@ -213,12 +228,32 @@ export const userSlice = createSlice({
         [deleteUser.fulfilled]: (state, action) => {
             state.loading = false
             state.users.filter(item=>item.hash !== action.payload)
-
         },
         [deleteUser.rejected]: (state) => {
             state.loading = false
         },
 
+        [restoreUser.pending]: (state) => {
+            state.loading = true
+        },
+        [restoreUser.fulfilled]: (state, action) => {
+            state.loading = false
+            state.users.filter(item=>item.hash !== action.payload)
+        },
+        [restoreUser.rejected]: (state) => {
+            state.loading = false
+        },
+
+        [PrintQr.pending]: (state) => {
+            state.loading = true
+        },
+        [PrintQr.fulfilled]: (state, { payload }) => {
+            state.loading = false
+            state.currentUser = payload
+        },
+        [PrintQr.rejected]: (state) => {
+            state.loading = false
+        },
 
     },
 })

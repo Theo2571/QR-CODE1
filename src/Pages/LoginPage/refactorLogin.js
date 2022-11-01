@@ -79,13 +79,13 @@ const RefactorLogin = () => {
                         >
                             Войти
                         </Button>
-                        <div className="auth-form__footer">
+                        {/*<div className="auth-form__footer">*/}
 
-                            <Typography variant="subtitle1" component="span" sx={{ color: 'blue'}}>
-                                <NavLink style={{ fontSize: 15 }} to={`/view/${hash}`}> Посмотреть анкету</NavLink>
+                        {/*    <Typography variant="subtitle1" component="span" sx={{ color: 'blue'}}>*/}
+                        {/*        <NavLink style={{ fontSize: 15 }} to={`/view/${hash}`}> Посмотреть анкету</NavLink>*/}
 
-                            </Typography>
-                        </div>
+                        {/*    </Typography>*/}
+                        {/*</div>*/}
                     </form>
                 </div>
         </>

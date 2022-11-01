@@ -17,7 +17,7 @@ const beforeEnterClient = (component, role, path) => {
         return component ;
     }
 
-    if (role === 'user' || path === '/login-client/:hash' || path === "/"  || path === '/view/:hash' || path === '/refactor-client/:hash') {
+    if (role === 'user' || path === '/qr/:hash' || path === "/"  || path === '/view/:hash' || path === '/refactor-client/:hash') {
         return component;
     }
     return 'Has no access'
