@@ -58,9 +58,10 @@ const View = () => {
     return (
         <div>
             <div style={{ display: "flex", justifyContent:"center", margin: 100}}>
-                <div style={{cursor:"pointer", position:"absolute", top:50, marginRight:"150px"}} onClick={Click}><EditIcon fontSize={"large"}/> </div>
+                <div style={{cursor:"pointer", position:"absolute", top:50, marginRight:"185px"}} onClick={Click}><EditIcon fontSize={"large"}/></div>
+                <p style={{position:"absolute", margin:"-20px 190px 0 0"}}>Редактировать</p>
                 <div style={{ width: 300,display: "flex", flexDirection: "column"}}>
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", position:"absolute",top:42, marginLeft:"200px"}}>
+                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", position:"absolute",top:42, marginLeft:"230px"}}>
                         <div style={{width: 200, cursor: "pointer", margin: "10px 0 0 0"}} onClick={() => {
                             if(navigator && navigator.geolocation && navigator.geolocation.getCurrentPosition) {
                                 navigator.geolocation.getCurrentPosition(position => {
@@ -71,6 +72,7 @@ const View = () => {
                             setOpen(true)
                         }}
                         ><PersonPinCircleIcon fontSize={"large"}/></div>
+                        <p style={{position:"absolute", margin:"40px 160px 0 0"}}>Поделиться геолокацией</p>
                         {open &&
                             <div style={{display: "flex", gap: 50, margin: "25px 0 0 0", flexDirection: "column"}}>
                                 <a onClick={()=> handleOpen()} style={{opacity:0}} href={copyText()}>Скопировать
@@ -83,42 +85,78 @@ const View = () => {
                             </div>
                         }
                     </div>
-                    <h2>Ребёнок</h2>
-                    <input style={{padding: 12 , margin: "0 0 20px 0"}} disabled type="text"
+                    <h2 style={{margin:"25px 0 25px 0"}}>Ребёнок</h2>
+                    {currantUser?.name ?
+                    <div>
+                    <input style={{padding: "12px 115px 12px 12px" , margin: "0 0 20px 0"}} disabled type="text"
                            value={currantUser?.name}
                     />
-                    <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text"
+                    </div>
+                        : <div></div>}
+                    {currantUser?.lastName ?
+                    <div>
+                    <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
                            value={currantUser?.lastName}
                     />
-                    <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text"
+                    </div>
+                        : <div></div>}
+                    {currantUser?.birthday ?
+                    <div>
+                    <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
                            value={currantUser?.birthday}
                     />
-                    <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text"
+                    </div>
+                        : <div></div>}
+                    {currantUser?.phone ?
+                    <div>
+                    <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
                            value={currantUser?.phone}
                     />
-                    <input style={{padding: 12, margin: "0 0 20px 0"}} disabled type="text"
+                </div>
+                        : <div></div>}
+                    {currantUser?.address ?
+                    <div>
+                    <input style={{padding: 12, width:272,margin: "0 0 20px 0"}} disabled type="text"
                            value={currantUser?.address}
                     />
+                    </div>
+                        : <div></div>}
+                    {currantUser?.сommentary ?
+                        <div>
+                            <textarea style={{padding: 12, width:272, height:200,fontSize:16,  margin: "0 0 20px 0" , resize: "none"}} disabled type="text"
+                                   value={currantUser?.сommentary}
+                            />
+                        </div>
+                        : <div></div>}
+
                     {currantUser?.mom?.name ?
                         <div>
                             <h2>Мама:</h2>
-                            <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                            <input style={{padding: 12,width:272, margin: "0 0 20px 0"}} disabled type="text"
                                    value={currantUser?.mom?.name}
                             />
 
                             <a href={"tel:" + currantUser?.mom?.phone}>
 
-                                <input style={{padding: "12px 115px 12px 12px", margin: "0 0 5px 0", cursor: "pointer"}}
+                                <input style={{padding: 12,width:272, margin: "0 0 5px 0", cursor: "pointer"}}
                                        disabled type="text"
                                        value={currantUser?.mom?.phone}
                                 />
                             </a>
 
                             <div style={{display: "flex", justifyContent: "center", gap: 25}}>
+                                {currantUser?.mom?.tg ?
+                                <div>
                                 <a href={currantUser?.mom?.tg} style={{cursor: "pointer"}} target="_blank"><img
                                     style={{width: 40}} className={s.img} src={telega} alt=""/></a>
+                                </div>
+                                    : <div></div>}
+                                {currantUser?.mom?.ws ?
+                                <div>
                                 <a href={currantUser?.mom?.ws} style={{cursor: "pointer"}} target="_blank"><img
                                     style={{width: 40}} className={s.img} src={whatsup} alt=""/></a>
+                                </div>
+                                    :  <div></div>}
                             </div>
                         </div>
                         :
@@ -128,19 +166,27 @@ const View = () => {
 
                         <div>
                             <h2>Папа:</h2>
-                            <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                            <input style={{padding: 12, width:272, margin: "0 0 20px 0"}} disabled type="text"
                                    value={currantUser?.dad?.name}/>
                             <a href={currantUser?.dad?.phone} target="_blank">
-                                <input style={{padding: "12px 115px 12px 12px", margin: "0 0 5px 0", cursor: "pointer"}}
+                                <input style={{padding: 12, width:272, margin: "0 0 5px 0", cursor: "pointer"}}
                                        disabled type="text"
                                        value={currantUser?.dad?.phone}
                                 />
                             </a>
                             <div style={{display: "flex", justifyContent: "center", gap: 25}}>
+                                {currantUser?.dad?.tg ?
+                                <div>
                                 <a href={currantUser?.dad?.tg} style={{cursor: "pointer"}} target="_blank"><img
                                     style={{width: 40}} className={s.img} src={telega} alt=""/></a>
+                                </div>
+                                    : <div></div>}
+                                {currantUser?.dad?.ws ?
+                                <div>
                                 <a href={currantUser?.dad?.ws} style={{cursor: "pointer"}} target="_blank"><img
                                     style={{width: 40}} className={s.img} src={whatsup} alt=""/></a>
+                                </div>
+                                    : <div></div> }
                             </div>
                         </div>
                         :

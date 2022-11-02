@@ -50,9 +50,9 @@ export const patchUsers  = createAsyncThunk(
 
 export const getUsers  = createAsyncThunk(
     'users/getUsers',
-    async ({limit, page, archived, createDateStart, createDateEnd}) => {
+    async ({limit, page, archived, createDateStart, createDateEnd, print}) => {
         const res = await axios.get(`http://92.245.114.113:5959/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-            params:{ page, archived, limit, createDateStart, createDateEnd}
+            params:{ page, archived, limit, createDateStart, createDateEnd, print}
         })
         return res.data
     })

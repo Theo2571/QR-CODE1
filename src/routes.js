@@ -33,10 +33,10 @@ export const publicRoutes = [
         path: CLIENT_ROUTE,
         Component: <ClientPage/>
     },
-    {
-        path: VIEW_ROUTE,
-        Component: <View/>
-    },
+    // {
+    //     path: VIEW_ROUTE,
+    //     Component: <View/>
+    // },
 
     {
         path: LOGIN_ROUTE,

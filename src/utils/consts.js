@@ -1,6 +1,6 @@
 export const ADMIN_ROUTE = '/admin'
 export const CLIENT_ROUTE = '/client/:hash'
-export const VIEW_ROUTE = '/view/:hash'
+// export const VIEW_ROUTE = '/view/:hash'
 export const LOGIN_ROUTE = '/'
 export const LOGINCLIENT_ROUTE = '/qr/:hash'
 export const ARHIVE_ROUTE = '/admin/archive'

@@ -23,7 +23,6 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -58,6 +57,7 @@ const InputPage= () => {
             birthday:currentUser?.birthday,
             phone:currentUser?.phone,
             address:currentUser?.address,
+            сommentary:currentUser?.сommentary,
             MomName: currentUser?.mom?.name,
             MomPhone: currentUser?.mom?.phone,
             MomTelegram: currentUser?.mom?.tg,
@@ -193,118 +193,135 @@ const InputPage= () => {
                             />
                         )}
                     />
+                    <Controller
+                        control={control}
+                        name="сommentary"
+                        // rules={gpsValidation}
+                        render={({ field }) => (
+                            <textarea style={{resize: "none",height:200, fontSize:16}}
+                                      placeholder='Комментарий'
+                                      label="Особенности ребёнка"
+                                      onChange={(e) => field.onChange(e)}
+                                      value={field.value}
+                                      className="auth-form__input"
+                                      error={!!errors.сommentary?.message}
+                                      helperText={ errors?.сommentary?.message}
+                            />
+                        )}
+                    />
+
                     <h1 className={s.h1}>Родители:</h1>
 
                     {/*{hasMom &&*/}
-                        <Accordion className={s.family}>
-                            <AccordionSummary
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography>Мама</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <div className={s.flex}>
-                                    <Controller
-                                        control={control}
-                                        name="MomName"
-                                        render={({ field }) => (
-                                            <TextField
+                    <Accordion className={s.family}>
+                        <AccordionSummary
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>Мама</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <div className={s.flex}>
+                                <Controller
+                                    control={control}
+                                    name="MomName"
+                                    render={({ field }) => (
+                                        <TextField
 
-                                                label="ФИО"
-                                                onChange={(e) => field.onChange(e)}
-                                                value={field.value}
-                                                fullWidth={ true }
-                                                size="small"
-                                                margin="normal"
-                                                className="auth-form__input"
-                                                error={!!errors.MomName?.message}
-                                                helperText={ errors?.MomName?.message}
-                                            />
-                                        )}
-                                    />
+                                            label="ФИО"
+                                            onChange={(e) => field.onChange(e)}
+                                            value={field.value}
+                                            fullWidth={ true }
+                                            size="small"
+                                            margin="normal"
+                                            className="auth-form__input"
+                                            error={!!errors.MomName?.message}
+                                            helperText={ errors?.MomName?.message}
+                                        />
+                                    )}
+                                />
 
-                                    <Controller
-                                        control={control}
-                                        name="MomPhone"
-                                        render={({ field }) => (
-                                            <TextField
-                                                label="Номер телефона"
-                                                onChange={(e) => field.onChange(e)}
-                                                value={field.value}
-                                                fullWidth={ true }
-                                                size="small"
-                                                margin="normal"
-                                                className="auth-form__input"
-                                                error={!!errors.MomPhone?.message}
-                                                helperText={ errors?.MomPhone?.message}
-                                            />
-                                        )}
-                                    />
-                                    <div className={s.mather}>
-                                        <img className={s.img} src={telega} alt="" onClick={() => setModalActive(true)}/>
-                                        <img className={s.img} src={whatsup} alt="" onClick={() => setModalActivee(true)}/>
-                                    </div>
+                                <Controller
+                                    control={control}
+                                    name="MomPhone"
+                                    render={({ field }) => (
+                                        <TextField
+                                            label="Номер телефона"
+                                            onChange={(e) => field.onChange(e)}
+                                            value={field.value}
+                                            fullWidth={ true }
+                                            size="small"
+                                            margin="normal"
+                                            className="auth-form__input"
+                                            error={!!errors.MomPhone?.message}
+                                            helperText={ errors?.MomPhone?.message}
+                                        />
+                                    )}
+                                />
+                                <div className={s.mather}>
+                                    <img className={s.img} src={telega} alt="" onClick={() => setModalActive(true)}/>
+                                    <img className={s.img} src={whatsup} alt="" onClick={() => setModalActivee(true)}/>
                                 </div>
-                            </AccordionDetails>
-                        </Accordion>
+                            </div>
+                        </AccordionDetails>
+                    </Accordion>
                     {/*}*/}
 
                     {/*{hasDad  &&*/}
-                        <Accordion className={s.family}>
-                            <AccordionSummary
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                            >
-                                <Typography>Папа</Typography>
-                                {/*<ClearIcon style={{ cursor: "pointer" , margin: "0 0 0 200px"}}  onClick={()=> setHasDad(false)}/>*/}
-                            </AccordionSummary>
+                    <Accordion className={s.family}>
+                        <AccordionSummary
+                            aria-controls="panel2a-content"
+                            id="panel2a-header"
+                        >
+                            <Typography>Папа</Typography>
+                            {/*<ClearIcon style={{ cursor: "pointer" , margin: "0 0 0 200px"}}  onClick={()=> setHasDad(false)}/>*/}
+                        </AccordionSummary>
 
-                            <AccordionDetails>
-                                <div className={s.flex}>
-                                    <Controller
-                                        control={control}
-                                        name="DadName"
-                                        render={({ field }) => (
-                                            <TextField
-                                                label="ФИО"
-                                                onChange={(e) => field.onChange(e)}
-                                                value={field.value}
-                                                fullWidth={ true }
-                                                size="small"
-                                                margin="normal"
-                                                className="auth-form__input"
-                                                error={!!errors.DadName?.message}
-                                                helperText={ errors?.DadName?.message}
-                                            />
-                                        )}
-                                    />
-                                    <Controller
-                                        control={control}
-                                        name="DadPhone"
-                                        render={({ field }) => (
-                                            <TextField
-                                                label="Номер телефона"
-                                                onChange={(e) => field.onChange(e)}
-                                                value={field.value}
-                                                fullWidth={ true }
-                                                size="small"
-                                                margin="normal"
-                                                className="auth-form__input"
-                                                error={!!errors.DadPhone?.message}
-                                                helperText={ errors?.DadPhone?.message}
-                                            />
-                                        )}
-                                    />
-                                    <div className={s.mather}>
-                                        <img className={s.img} src={telega} alt="" onClick={() => setModalActiveee(true)}/>
-                                        <img className={s.img} src={whatsup} alt="" onClick={() => setModalActiveeee(true)}/>
-                                    </div>
-
-
+                        <AccordionDetails>
+                            <div className={s.flex}>
+                                <Controller
+                                    control={control}
+                                    name="DadName"
+                                    render={({ field }) => (
+                                        <TextField
+                                            label="ФИО"
+                                            onChange={(e) => field.onChange(e)}
+                                            value={field.value}
+                                            fullWidth={ true }
+                                            size="small"
+                                            margin="normal"
+                                            className="auth-form__input"
+                                            error={!!errors.DadName?.message}
+                                            helperText={ errors?.DadName?.message}
+                                        />
+                                    )}
+                                />
+                                <Controller
+                                    control={control}
+                                    name="DadPhone"
+                                    render={({ field }) => (
+                                        <TextField
+                                            label="Номер телефона"
+                                            onChange={(e) => field.onChange(e)}
+                                            value={field.value}
+                                            fullWidth={ true }
+                                            size="small"
+                                            margin="normal"
+                                            className="auth-form__input"
+                                            error={!!errors.DadPhone?.message}
+                                            helperText={ errors?.DadPhone?.message}
+                                        />
+                                    )}
+                                />
+                                <div className={s.mather}>
+                                    <img className={s.img} src={telega} alt="" onClick={() => setModalActiveee(true)}/>
+                                    <img className={s.img} src={whatsup} alt="" onClick={() => setModalActiveeee(true)}/>
                                 </div>
-                            </AccordionDetails>
-                        </Accordion>
+
+
+                            </div>
+                        </AccordionDetails>
+                    </Accordion>
                     {/*// }*/}
 
                     <div className={s.h2}>
