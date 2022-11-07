@@ -29,6 +29,7 @@ td {
   display: flex;
   flex-wrap: wrap;
   width: 1000px;
+  margin: 0 0 0 210px;
 }
 form {
   display: flex;
@@ -57,6 +58,9 @@ form * {
   padding: 0 50px 0 8px;
   align-items: center;
 }
+.checkbox {
+  display: none;
+}
   @media  print {
 
     .pagination {
@@ -72,11 +76,22 @@ form * {
     .active__print {
       display: flex;
       flex-wrap: wrap;
+      width: 800px;
+      margin: 0 0 0 50px;
     }
     .bar {
       display: none;
     }
     .bth {
       display: none;
+    }
+    .print__active {
+      display: block !important;
+    }
+    .printt {
+      display: none;
+    }
+    .checkbox {
+      display: block;
     }
   }
