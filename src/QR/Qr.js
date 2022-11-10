@@ -15,7 +15,7 @@ const print = () => {
             {isActive ?
             <div>
                 <div  style={{ display:"flex",padding:10, }}>
-                    <QRCode className={s.qr}  value={`http://http://localhost:3000/qr/${hash}`} size={150} />
+                    <QRCode className={s.qr}  value={`http://192.168.88.95:3000/qr/${hash}`} size={150} />
                     <div className={s.bth} style={{position:"absolute", margin:"-15px 152px 0 ", color:"#43DC0EFF"}} >
                       <TaskAltIcon />
                     </div>
@@ -24,7 +24,7 @@ const print = () => {
                 :
                 <div style={{background: isActive ? '#cccccc' : 'transparent'}}>
                     <div  style={{ display:"flex",padding:10, }}>
-                        <QRCode className={s.qr}  value={`http://http://localhost:3000/qr/${hash}`} size={150} />
+                        <QRCode className={s.qr}  value={`http://192.168.88.95:3000/qr/${hash}`} size={150} />
                     </div>
                 </div>
             }

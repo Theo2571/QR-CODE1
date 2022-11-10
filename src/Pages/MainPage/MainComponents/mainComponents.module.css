@@ -33,7 +33,6 @@ td {
 }
 form {
   display: flex;
-  gap: 5px;
 }
 
 form td:last-child {
@@ -95,3 +94,5 @@ form * {
       display: block;
     }
   }
+
+

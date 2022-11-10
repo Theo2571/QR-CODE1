@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import telega from "../../../assets/ClientPhoto/telegram.png";
 import whatsup from "../../../assets/ClientPhoto/whatsapp.png";
 import s from "./ClientComponents.module.css";
+
 import { useForm, SubmitHandler, Controller, useFormState } from "react-hook-form";
 import Box from '@mui/material/Box';
 import Modall from '@mui/material/Modal';
@@ -89,7 +90,7 @@ const InputPage= () => {
 
     return (
         <div className={s.input}>
-            <h1>Ребенок:</h1>
+            <h1>Ребенок</h1>
             <div >
                 <form className={s.input__title} onSubmit={handleSubmit(onSubmit)}>
                     <Controller
@@ -97,7 +98,7 @@ const InputPage= () => {
                         name="name"
                         // rules={nameValidation}
                         render={({ field }) => (
-                            <TextField
+                            <TextField style={{margin:"0 0 10px"}}
 
                                 label="Имя"
                                 onChange={(e) => field.onChange(e)}
@@ -105,7 +106,7 @@ const InputPage= () => {
                                 fullWidth={ true }
                                 size="small"
                                 margin="normal"
-                                className="auth-form__input"
+                                className="auth_form__input"
                                 error={!!errors.name?.message}
                                 helperText={ errors?.name?.message}
                             />
@@ -116,7 +117,7 @@ const InputPage= () => {
                         name="lastName"
                         // rules={FirstValidation}
                         render={({ field }) => (
-                            <TextField
+                            <TextField style={{margin:"0 0 10px"}}
                                 label="Фамилия"
                                 onChange={(e) => field.onChange(e)}
                                 value={field.value}
@@ -141,7 +142,7 @@ const InputPage= () => {
                                     name="birthday"
                                     // rules={DataValidation}
                                     render={({ field }) => (
-                                        <TextField
+                                        <TextField style={{margin:"0 0 10px"}}
                                             label="Дата рождения"
                                             onChange={(e) => field.onChange(e)}
                                             value={field.value}
@@ -162,7 +163,7 @@ const InputPage= () => {
                         name="phone"
                         // rules={phoneValidation}
                         render={({ field }) => (
-                            <TextField
+                            <TextField style={{margin:"0 0 10px"}}
                                 label="Номер телефона"
                                 onChange={(e) => field.onChange(e)}
                                 value={field.value}
@@ -180,7 +181,7 @@ const InputPage= () => {
                         name="address"
                         // rules={gpsValidation}
                         render={({ field }) => (
-                            <TextField
+                            <TextField style={{margin:"0 0 10px"}}
                                 label="Место проживания"
                                 onChange={(e) => field.onChange(e)}
                                 value={field.value}
@@ -210,9 +211,9 @@ const InputPage= () => {
                         )}
                     />
 
-                    <h1 className={s.h1}>Родители:</h1>
+                    <h1 className={s.h1}>Родители</h1>
 
-                    {/*{hasMom &&*/}
+                    <div className={s.ffff}>
                     <Accordion className={s.family}>
                         <AccordionSummary
                             aria-controls="panel1a-content"
@@ -220,13 +221,13 @@ const InputPage= () => {
                         >
                             <Typography>Мама</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails >
                             <div className={s.flex}>
                                 <Controller
                                     control={control}
                                     name="MomName"
                                     render={({ field }) => (
-                                        <TextField
+                                        <TextField style={{margin:"0 0 10px"}}
 
                                             label="ФИО"
                                             onChange={(e) => field.onChange(e)}
@@ -245,7 +246,7 @@ const InputPage= () => {
                                     control={control}
                                     name="MomPhone"
                                     render={({ field }) => (
-                                        <TextField
+                                        <TextField style={{margin:0}}
                                             label="Номер телефона"
                                             onChange={(e) => field.onChange(e)}
                                             value={field.value}
@@ -265,25 +266,23 @@ const InputPage= () => {
                             </div>
                         </AccordionDetails>
                     </Accordion>
-                    {/*}*/}
+                   </div>
 
-                    {/*{hasDad  &&*/}
+                    <div className={s.ffff}>
                     <Accordion className={s.family}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"
                         >
                             <Typography>Папа</Typography>
-                            {/*<ClearIcon style={{ cursor: "pointer" , margin: "0 0 0 200px"}}  onClick={()=> setHasDad(false)}/>*/}
                         </AccordionSummary>
-
                         <AccordionDetails>
                             <div className={s.flex}>
                                 <Controller
                                     control={control}
                                     name="DadName"
                                     render={({ field }) => (
-                                        <TextField
+                                        <TextField style={{margin:"0 0 10px"}}
                                             label="ФИО"
                                             onChange={(e) => field.onChange(e)}
                                             value={field.value}
@@ -300,7 +299,7 @@ const InputPage= () => {
                                     control={control}
                                     name="DadPhone"
                                     render={({ field }) => (
-                                        <TextField
+                                        <TextField style={{margin:0}}
                                             label="Номер телефона"
                                             onChange={(e) => field.onChange(e)}
                                             value={field.value}
@@ -317,12 +316,10 @@ const InputPage= () => {
                                     <img className={s.img} src={telega} alt="" onClick={() => setModalActiveee(true)}/>
                                     <img className={s.img} src={whatsup} alt="" onClick={() => setModalActiveeee(true)}/>
                                 </div>
-
-
                             </div>
                         </AccordionDetails>
                     </Accordion>
-                    {/*// }*/}
+                    </div>
 
                     <div className={s.h2}>
                         <Button
@@ -354,7 +351,7 @@ const InputPage= () => {
                             control={control}
                             name="MomTelegram"
                             render={({ field }) => (
-                                <TextField
+                                <TextField style={{margin:"0 0 10px"}}
                                     style={{margin: "0 30px"}}
                                     label="Ссылка на Телеграмм"
                                     onChange={(e) => field.onChange(e)}
@@ -378,7 +375,7 @@ const InputPage= () => {
                             control={control}
                             name="MomWhats"
                             render={({ field }) => (
-                                <TextField
+                                <TextField style={{margin:"0 0 10px"}}
                                     style={{margin: "0 30px"}}
                                     label="Ссылка на Вотсап"
                                     onChange={(e) => field.onChange(e)}
@@ -402,7 +399,7 @@ const InputPage= () => {
                             control={control}
                             name="DadTelegram"
                             render={({ field }) => (
-                                <TextField
+                                <TextField style={{margin:"0 0 10px"}}
                                     style={{margin: "0 30px"}}
                                     label="Ссылка на Телеграмм"
                                     onChange={(e) => field.onChange(e)}
@@ -426,7 +423,7 @@ const InputPage= () => {
                             control={control}
                             name="DadWhats"
                             render={({ field }) => (
-                                <TextField
+                                <TextField style={{margin:"0 0 10px"}}
                                     style={{margin: "0 30px"}}
                                     label="Ссылка на Вотсап"
                                     onChange={(e) => field.onChange(e)}

@@ -51,18 +51,17 @@ const View = () => {
             setCurrantUser(res.payload)
             console.log(res.payload)
         })
-
         console.log(hash)
     }, []);
 
     return (
         <div>
-            <div style={{ display: "flex", justifyContent:"center", margin: 100}}>
-                <div style={{cursor:"pointer", position:"absolute", top:50, marginRight:"185px"}} onClick={Click}><EditIcon fontSize={"large"}/></div>
-                <p style={{position:"absolute", margin:"-20px 190px 0 0"}}>Редактировать</p>
+            <div style={{ display: "flex", justifyContent:"center", margin: "50px 0 0 0"}}>
+
                 <div style={{ width: 300,display: "flex", flexDirection: "column"}}>
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", position:"absolute",top:42, marginLeft:"230px"}}>
-                        <div style={{width: 200, cursor: "pointer", margin: "10px 0 0 0"}} onClick={() => {
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", }}>
+                    <div style={{display:"flex", justifyContent:"space-between", gap:145}}>
+                        <div style={{ cursor: "pointer", display:"flex", flexDirection:"column", alignItems:"center"}} onClick={() => {
                             if(navigator && navigator.geolocation && navigator.geolocation.getCurrentPosition) {
                                 navigator.geolocation.getCurrentPosition(position => {
                                     setLong(position.coords.longitude);
@@ -71,59 +70,65 @@ const View = () => {
                             }
                             setOpen(true)
                         }}
-                        ><PersonPinCircleIcon fontSize={"large"}/></div>
-                        <p style={{position:"absolute", margin:"40px 160px 0 0"}}>Поделиться геолокацией</p>
+                        ><PersonPinCircleIcon fontSize={"large"}/>
+                            <p style={{width:68, fontSize:12}}>Поделиться геолокацией</p></div>
+
                         {open &&
-                            <div style={{display: "flex", gap: 50, margin: "25px 0 0 0", flexDirection: "column"}}>
-                                <a onClick={()=> handleOpen()} style={{opacity:0}} href={copyText()}>Скопировать
+                            <div style={{display: "flex", gap: 50, margin: "25px 0 0 0", flexDirection: "column", position:"absolute"}}>
+                                <a onClick={()=> handleOpen()} style={{opacity:0, position:"absolute"}} href={copyText()}>Скопировать
                                     Геолокацию</a>
-                                <div style={{opacity: 0}}>
+                                <div style={{opacity: 0, position:"absolute"}}>
                                     <h1>Long: {long}</h1>
                                     <h1>Lat: {lat}</h1>
                                 </div>
 
                             </div>
                         }
+                        <div style={{cursor:"pointer" , display:"flex", flexDirection:"column", alignItems:"center"}}>
+                            <div onClick={Click}><EditIcon fontSize={"large"}/></div>
+                            <p style={{fontSize:12}}>Редактировать</p>
+                        </div>
                     </div>
-                    <h2 style={{margin:"25px 0 25px 0"}}>Ребёнок</h2>
+                    </div>
+                    <h2 style={{textAlign:"center", fontSize:20}} >Ребёнок</h2>
                     {currantUser?.name ?
                     <div>
-                    <input style={{padding: "12px 115px 12px 12px" , margin: "0 0 20px 0"}} disabled type="text"
+                    <input style={{padding: 12, width:272,margin: "0 0 10px 0"}} disabled type="text"
                            value={currantUser?.name}
                     />
                     </div>
                         : <div></div>}
                     {currantUser?.lastName ?
                     <div>
-                    <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                    <input style={{padding: 12, width:272,margin: "0 0 10px 0"}} disabled type="text"
                            value={currantUser?.lastName}
                     />
                     </div>
                         : <div></div>}
                     {currantUser?.birthday ?
                     <div>
-                    <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                    <input style={{padding: 12, width:272,margin: "0 0 10px 0"}} disabled type="text"
                            value={currantUser?.birthday}
                     />
                     </div>
                         : <div></div>}
                     {currantUser?.phone ?
                     <div>
-                    <input style={{padding: "12px 115px 12px 12px", margin: "0 0 20px 0"}} disabled type="text"
+                    <input style={{padding: 12, width:272,margin: "0 0 10px 0"}} disabled type="text"
                            value={currantUser?.phone}
                     />
                 </div>
                         : <div></div>}
                     {currantUser?.address ?
                     <div>
-                    <input style={{padding: 12, width:272,margin: "0 0 20px 0"}} disabled type="text"
+                    <input style={{padding: 12, width:272,margin: "0 0 10px 0"}} disabled type="text"
                            value={currantUser?.address}
                     />
                     </div>
                         : <div></div>}
                     {currantUser?.сommentary ?
                         <div>
-                            <textarea style={{padding: 12, width:272, height:200,fontSize:16,  margin: "0 0 20px 0" , resize: "none"}} disabled type="text"
+                            <textarea style={{padding: 12, width:272, height:200,fontSize:16,  margin: "0 0 10px 0" , resize: "none"}} disabled type="text"
                                    value={currantUser?.сommentary}
                             />
                         </div>
@@ -131,8 +136,8 @@ const View = () => {
 
                     {currantUser?.mom?.name ?
                         <div>
-                            <h2>Мама:</h2>
-                            <input style={{padding: 12,width:272, margin: "0 0 20px 0"}} disabled type="text"
+                            <h2 style={{textAlign:"center", fontSize:20}}>Мама</h2>
+                            <input style={{padding: 12,width:272, margin: "0 0 10px 0"}} disabled type="text"
                                    value={currantUser?.mom?.name}
                             />
 
@@ -165,8 +170,8 @@ const View = () => {
                     {currantUser?.dad?.name ?
 
                         <div>
-                            <h2>Папа:</h2>
-                            <input style={{padding: 12, width:272, margin: "0 0 20px 0"}} disabled type="text"
+                            <h2 style={{textAlign:"center",fontSize:20}}>Папа</h2>
+                            <input style={{padding: 12,width:272, margin: "0 0 10px 0", cursor: "pointer"}} disabled type="text"
                                    value={currantUser?.dad?.name}/>
                             <a href={currantUser?.dad?.phone} target="_blank">
                                 <input style={{padding: 12, width:272, margin: "0 0 5px 0", cursor: "pointer"}}
