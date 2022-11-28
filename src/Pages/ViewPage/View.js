@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
+import useGeolocation from "../../components/useGeolocation/useGeolocation";
 
 const View = () => {
     const [open , setOpen] = useState(false)
@@ -22,7 +23,7 @@ const View = () => {
     const [long, setLong] = useState(null);
     const [lat, setLat] = useState(null)
     const token = useSelector( store => store.userReducer.token);
-
+    // const location  = useGeolocation()
 
     const Click = () => {
         navigate(`/refactor-client/${hash}`)
@@ -43,7 +44,7 @@ const View = () => {
     };
     function copyText() {
         navigator.clipboard.writeText
-        (`https://2gis.ru/geo/${long},${lat}`);
+        (`https://2gis.ru/geo/${long},${lat}`)
     }
 
     useEffect(() => {
@@ -57,7 +58,7 @@ const View = () => {
     return (
         <div>
             <div style={{ display: "flex", justifyContent:"center", margin: "50px 0 0 0"}}>
-
+{/*<div>{location.loaded ? JSON.stringify(location) : "Location data not avait"}</div>*/}
                 <div style={{ width: 300,display: "flex", flexDirection: "column"}}>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", }}>
                     <div style={{display:"flex", justifyContent:"space-between", gap:145}}>
@@ -75,7 +76,7 @@ const View = () => {
 
                         {open &&
                             <div style={{display: "flex", gap: 50, margin: "25px 0 0 0", flexDirection: "column", position:"absolute"}}>
-                                <a onClick={()=> handleOpen()} style={{opacity:0, position:"absolute"}} href={copyText()}>Скопировать
+                                <a onClick={()=> handleOpen()} style={{opacity:0, position:"absolute"}} href={ copyText()}>Скопировать
                                     Геолокацию</a>
                                 <div style={{opacity: 0, position:"absolute"}}>
                                     <h1>Long: {long}</h1>
