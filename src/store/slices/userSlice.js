@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
-
+const BASE_URL = "https://qr.discoverystudio.xyz/api"
 const initialState = {
     users: [],
     token: localStorage.getItem('token') || null ,
@@ -16,7 +16,7 @@ const initialState = {
 export const postRegister  = createAsyncThunk(
     'register/postRegister',
     async (data) => {
-        const res = await axios.post(`http://92.245.114.113:5959/accounts/user/register/${data.count}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
+        const res = await axios.post(`${BASE_URL}/accounts/user/register/${data.count}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
         return res.data
     })
 
@@ -24,7 +24,7 @@ export const postLogin  = createAsyncThunk(
     'login/postLogin',
     async (data, { rejectWithValue }) => {
         try{
-            const res = await axios.post(`http://92.245.114.113:5959/accounts/login`, data)
+            const res = await axios.post(`${BASE_URL}/api/accounts/login`, data)
             return res.data
         }catch (e){
             return rejectWithValue(e.response.data.message)
@@ -34,7 +34,7 @@ export const postLogin  = createAsyncThunk(
 export const postAdmin  = createAsyncThunk(
     'login/postAdmin',
     async (data) => {
-        const res = await axios.post(`http://92.245.114.113:5959/accounts/admin/login`, data, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
+        const res = await axios.post(`${BASE_URL}/accounts/admin/login`, data, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
         return res.data
 
     })
@@ -43,7 +43,7 @@ export const postAdmin  = createAsyncThunk(
 export const patchUsers  = createAsyncThunk(
     'users/patchUsers',
     async ({ data, hash}) => {
-        const res = await axios.patch(`http://92.245.114.113:5959/users/${hash}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        const res = await axios.patch(`${BASE_URL}/users/${hash}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         return res.data
     })
 
@@ -51,7 +51,7 @@ export const patchUsers  = createAsyncThunk(
 export const getUsers  = createAsyncThunk(
     'users/getUsers',
     async ({limit, page, archived, createDateStart, createDateEnd, print}) => {
-        const res = await axios.get(`http://92.245.114.113:5959/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        const res = await axios.get(`${BASE_URL}/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             params:{ page, archived, limit, createDateStart, createDateEnd, print}
         })
         return res.data
@@ -61,7 +61,7 @@ export const getUsers  = createAsyncThunk(
 export const getUserss  = createAsyncThunk(
     'users/getUserss',
     async ( hash) => {
-        const res = await axios.get(`http://92.245.114.113:5959/users/${hash}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        const res = await axios.get(`${BASE_URL}/users/${hash}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         return res.data
     })
 
@@ -69,14 +69,14 @@ export const getUserss  = createAsyncThunk(
 export const getProfile  = createAsyncThunk(
     'users/getProfile',
     async (thunkAPI) => {
-        const res = await axios.get(`http://92.245.114.113:5959/users/myProfile`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        const res = await axios.get(`${BASE_URL}/users/myProfile`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         return res.data
     })
 
 export const deleteUser = createAsyncThunk(
     'users/deleteUser',
     async (hash ) => {
-        const res = await axios.delete(`http://92.245.114.113:5959/users/${hash}`,
+        const res = await axios.delete(`${BASE_URL}/users/${hash}`,
             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
@@ -84,7 +84,7 @@ export const deleteUser = createAsyncThunk(
 export const restoreUser = createAsyncThunk(
     'users/restoreUser',
     async (hash ) => {
-        const res = await axios.patch(`http://92.245.114.113:5959/users/restore/${hash}`,
+        const res = await axios.patch(`${BASE_URL}/users/restore/${hash}`,
             {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
@@ -92,14 +92,14 @@ export const restoreUser = createAsyncThunk(
 export const archiveUser = createAsyncThunk(
     'users/archiveUser',
     async (hash ) => {
-        const res = await axios.patch(`http://92.245.114.113:5959/users/archive/${hash}`,
+        const res = await axios.patch(`${BASE_URL}/users/archive/${hash}`,
             {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
 export const PrintQr = createAsyncThunk(
     'users/PrintQr',
     async (hashes) => {
-        const res = await axios.patch(`http://92.245.114.113:5959/users/print`,
+        const res = await axios.patch(`${BASE_URL}/users/print`,
             { hashes }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
         return hash
     })
