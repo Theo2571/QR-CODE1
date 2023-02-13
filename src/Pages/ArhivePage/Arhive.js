@@ -32,7 +32,7 @@ const Archive = ({ contact }) => {
                 <td style={{ fontSize: 15 }} >{contact?.mom?.phone}</td>
                 <td style={{ fontSize: 15 }} >{contact?.dad?.name}</td>
                 <td style={{ fontSize: 15 }} >{contact?.dad?.phone}</td>
-                <td style={{ fontSize: 15 }} >{dayjs(contact?.createDate).format('YYYY-MM-DD')}</td>
+                <td style={{ fontSize: 15 }} >{dayjs(contact?.createDate).format('[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]')}</td>
                 <td style={{ fontSize: 15 }}>
                     <button style={{ fontSize: 15 }} type="button" onClick={restore}>
                         Восстановить
