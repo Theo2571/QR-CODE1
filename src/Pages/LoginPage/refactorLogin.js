@@ -6,8 +6,8 @@ import { useForm, Controller, useFormState } from "react-hook-form";
 import ss from'./Login.module.css';
 import {passwordValidation } from '../../validation/validation';
 import { NavLink, useNavigate, useParams} from "react-router-dom";
-import {getProfile, getUserss, postLogin} from "../../store/slices/userSlice";
 import {useDispatch, useSelector} from "react-redux";
+import { getProfile, postLogin } from '../../store/actions/userActions';
 
 const RefactorLogin = () => {
     const navigate = useNavigate();

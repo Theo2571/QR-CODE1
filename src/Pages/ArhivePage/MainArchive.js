@@ -1,5 +1,5 @@
 import React from 'react';
-import ResponsiveAppBar from "../Header/header";
+import ResponsiveAppBar from '../../components/Header/header';
 import ArchivePage from "./ArhivePage";
 
 const MainArchive = () => {

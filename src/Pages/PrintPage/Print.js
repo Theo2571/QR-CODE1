@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import s from "../MainPage/MainComponents/mainComponents.module.css";
 import DateFilter from "../../components/DataPicker/DataPicker";
-import {getUsers, hash, PrintQr} from "../../store/slices/userSlice";
 import Qr from "../../QR/Qr";
 import {useDispatch, useSelector} from "react-redux";
+import { getUsers, PrintQr } from '../../store/actions/userActions';
 
 const Print = () => {
     const [arr, setArr] = useState([])

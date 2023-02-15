@@ -2,6 +2,7 @@ import {useSelector} from "react-redux";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {authRoutes, publicRoutes} from "./routes";
 import {LOGIN_ROUTE} from "./utils/consts";
+
 const beforeEnterAdmin = (component, role, path ) => {
     if (path === '/admin'  ) {
         return component
@@ -11,7 +12,8 @@ const beforeEnterAdmin = (component, role, path ) => {
     } else {
         return <Navigate to="/" /> ;
     }
-}
+};
+
 const beforeEnterClient = (component, role, path) => {
     if (role === 'superadmin'  ) {
         return component ;
@@ -21,8 +23,8 @@ const beforeEnterClient = (component, role, path) => {
         return component;
     }
     return 'Has no access'
+};
 
-}
 const AppRouter = () => {
     const role = useSelector( store => store.userReducer.role);
 

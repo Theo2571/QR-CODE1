@@ -1,10 +1,10 @@
 import  React, {useState} from "react";
-import Modal from "../../../Modal/Modal";
 import Qr from "../../../QR/Qr";
 import {useDispatch} from "react-redux";
-import {archiveUser, getUsers} from "../../../store/slices/userSlice";
 import s from "./mainComponents.module.css"
 import dayjs from "dayjs";
+import { archiveUser, getUsers } from "../../../store/actions/userActions";
+import Modal from "../../../components/Modal/Modal";
 
 const ReadOnlyRow = ({ contact }) => {
     const [modalActive, setModalActive] = useState(false)
@@ -13,6 +13,7 @@ const ReadOnlyRow = ({ contact }) => {
         await dispatch(archiveUser(contact?.hash))
         dispatch(getUsers({archived: false}))
     }
+
     return (
         <>
         <tr className={s.tr}>

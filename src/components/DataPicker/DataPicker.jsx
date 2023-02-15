@@ -1,7 +1,7 @@
 import React from 'react';
-import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import s from "../../Pages/MainPage/MainComponents/mainComponents.module.css"
+import "react-datepicker/dist/react-datepicker.css";
 
 const DateFilter = ({date,setDate}) => {
     return (

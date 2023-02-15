@@ -1,6 +1,7 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import axios from 'axios'
-const BASE_URL = "https://qr.discoverystudio.xyz/api"
+import {createSlice} from '@reduxjs/toolkit';
+import { archiveUser, deleteUser, getProfile, getUsers, getUserss, patchUsers, postAdmin, postLogin, postRegister, PrintQr, restoreUser } from '../actions/userActions';
+
+
 const initialState = {
     users: [],
     token: localStorage.getItem('token') || null ,
@@ -11,98 +12,9 @@ const initialState = {
     error: "Invalid password",
     currentUser: null,
     total: 0
-}
-
-export const postRegister  = createAsyncThunk(
-    'register/postRegister',
-    async (data) => {
-        const res = await axios.post(`${BASE_URL}/accounts/user/register/${data.count}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
-        return res.data
-    })
-
-export const postLogin  = createAsyncThunk(
-    'login/postLogin',
-    async (data, { rejectWithValue }) => {
-        try{
-            const res = await axios.post(`${BASE_URL}/api/accounts/login`, data)
-            return res.data
-        }catch (e){
-            return rejectWithValue(e.response.data.message)
-        }
-    })
-
-export const postAdmin  = createAsyncThunk(
-    'login/postAdmin',
-    async (data) => {
-        const res = await axios.post(`${BASE_URL}/accounts/admin/login`, data, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} })
-        return res.data
-
-    })
+};
 
 
-export const patchUsers  = createAsyncThunk(
-    'users/patchUsers',
-    async ({ data, hash}) => {
-        const res = await axios.patch(`${BASE_URL}/users/${hash}`, data , { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-        return res.data
-    })
-
-
-export const getUsers  = createAsyncThunk(
-    'users/getUsers',
-    async ({limit, page, archived, createDateStart, createDateEnd, print}) => {
-        const res = await axios.get(`${BASE_URL}/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-            params:{ page, archived, limit, createDateStart, createDateEnd, print}
-        })
-        return res.data
-    })
-
-
-export const getUserss  = createAsyncThunk(
-    'users/getUserss',
-    async ( hash) => {
-        const res = await axios.get(`${BASE_URL}/users/${hash}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-        return res.data
-    })
-
-
-export const getProfile  = createAsyncThunk(
-    'users/getProfile',
-    async (thunkAPI) => {
-        const res = await axios.get(`${BASE_URL}/users/myProfile`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-        return res.data
-    })
-
-export const deleteUser = createAsyncThunk(
-    'users/deleteUser',
-    async (hash ) => {
-        const res = await axios.delete(`${BASE_URL}/users/${hash}`,
-            { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
-        return hash
-    })
-
-export const restoreUser = createAsyncThunk(
-    'users/restoreUser',
-    async (hash ) => {
-        const res = await axios.patch(`${BASE_URL}/users/restore/${hash}`,
-            {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
-        return hash
-    })
-
-export const archiveUser = createAsyncThunk(
-    'users/archiveUser',
-    async (hash ) => {
-        const res = await axios.patch(`${BASE_URL}/users/archive/${hash}`,
-            {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
-        return hash
-    })
-export const PrintQr = createAsyncThunk(
-    'users/PrintQr',
-    async (hashes) => {
-        const res = await axios.patch(`${BASE_URL}/users/print`,
-            { hashes }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } } )
-        return hash
-    })
 export const userSlice = createSlice({
     name: 'users',
     initialState,
@@ -129,7 +41,6 @@ export const userSlice = createSlice({
         },
 
 
-
         [postLogin.pending]: (state) => {
             state.loading = true
 
@@ -144,7 +55,6 @@ export const userSlice = createSlice({
             state.role = payload.role
             localStorage.setItem('role', payload.role)
             localStorage.setItem('token', payload.accessToken)
-
         },
 
 
@@ -166,7 +76,7 @@ export const userSlice = createSlice({
         [patchUsers.pending]: (state) => {
             state.loading = true
         },
-        [patchUsers.fulfilled]: (state, { payload }) => {
+        [patchUsers.fulfilled]: (state) => {
             state.loading = false
         },
         [patchUsers.rejected]: (state) => {
@@ -256,9 +166,12 @@ export const userSlice = createSlice({
         },
 
     },
-})
+});
+
 export const {
     hash,
-    setUserId
-} = userSlice.actions
-export const userSliceReducer = userSlice.reducer
+    setUserId,
+    email
+} = userSlice.actions;
+
+export const userSliceReducer = userSlice.reducer;

@@ -3,14 +3,14 @@ import telega from "../../assets/ClientPhoto/telegram.png";
 import whatsup from "../../assets/ClientPhoto/whatsapp.png";
 import s from "../ClientPage/ClientComponents/ClientComponents.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import { getUserss} from "../../store/slices/userSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import Modall from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
-import useGeolocation from "../../components/useGeolocation/useGeolocation";
+import { getUserss } from '../../store/actions/userActions';
+// import useGeolocation from "../../components/useGeolocation/useGeolocation";
 
 const View = () => {
     const [open , setOpen] = useState(false)

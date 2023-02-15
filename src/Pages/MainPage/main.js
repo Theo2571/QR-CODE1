@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
+import ResponsiveAppBar from "../../components/Header/header";
 import MainComponents from "./MainComponents/mainComponents";
-import ResponsiveAppBar from "../Header/header";
 
 const Main = () => {
-    return (
-        <div>
-            <ResponsiveAppBar/>
-           <MainComponents/>
-        </div>
-    );
+  return (
+    <div>
+      <ResponsiveAppBar />
+      <MainComponents />
+    </div>
+  );
 };
 
 export default Main;
